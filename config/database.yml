@@ -1,0 +1,8 @@
+database:
+  host: 'localhost'
+  user: 'root'
+  password: ''
+  database: 'p5'
+  port: 3306      # mysql : 3306  /  postgres : 5432
+  type: pdo       # 'mysqli' or 'pdo'
+  bdd: mysql      # 'mysql' or 'pgsql' si le type de bdd est PDO

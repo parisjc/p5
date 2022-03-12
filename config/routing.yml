@@ -1,0 +1,26 @@
+routes:
+  '/':
+    controller: 'DefaultController'
+    function: 'DefaultAction'
+
+  '/post/{id}':
+    controller: 'PostController'
+    function: 'DefaultAction'
+
+  '/updatepost':
+    controller: 'PostController'
+    function: 'UpdatePost'
+    methods:
+      - POST
+
+  '/login':
+    controller: 'LoginController'
+    function: 'DefaultAction'
+    role :
+      - ROLE_ADMIN
+
+  '/validlogin':
+    controller: 'LoginController'
+    function: 'ValidLoginAction'
+    methods:
+      - POST

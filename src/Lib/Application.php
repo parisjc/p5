@@ -24,10 +24,6 @@ class Application
         session_start();
 
         $config = $this->loadConfig();
-//        foreach ($config['routes'] as $route => $data)
-//        {
-//            RoutesManager::addRoute($route, $data);
-//        }
         BDD::init($config['database']);
         foreach ($config['routes'] as $route => $data)
         {
@@ -50,8 +46,12 @@ class Application
 
         try{
             $db = Yaml::parseFile(Autoload::getRootPath().'config/database.yml');
+            $config = Yaml::parseFile(Autoload::getRootPath().'config/config.yml');
             $routing = Yaml::parseFile(Autoload::getRootPath().'config/routing.yml');
-            $finalConfig =  array_merge($db,$routing);
+            foreach ($config['access'] as $role => $id) {
+                define($role, $id);
+            }
+            $finalConfig =  array_merge($db,$config,$routing);
         } catch (ParseException $exception) {
             ExceptionsManager::addException( new RuntimeException('Unable to parse the YAML string: %s', $exception->getMessage()));
         }

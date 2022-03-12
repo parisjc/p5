@@ -78,6 +78,7 @@ class Router
                             $reflection = new ReflectionMethod($controller, $func);
                             foreach($reflection->getParameters() AS $arg)
                             {
+
                                 if($_POST[$arg->name])
                                     $orderedParam[$arg->name] = $_POST[$arg->name];
                                 else
