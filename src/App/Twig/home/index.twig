@@ -1,0 +1,91 @@
+{% extends 'base.twig' %}
+
+{% block page_title %}Accueil{% endblock %}
+{% block css %}
+    {{ asset('pages/index.css') }}
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block body %}
+<main class="flex-shrink-0">
+    <h2 class="ml2 text-center">PARIS Jean-Christophe, le développeur à votre écoute</h2>
+    <div class="container">
+        <div class="row mb-2">
+        {% for post in postActifLimit %}
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0">{{ post.title }}</h3>
+                        <div class="mb-1 text-muted">{{ post.creation_date|date('d-m-Y') }}</div>
+                        <p class="card-text mb-auto">{{ post.summary }}</p>
+                        <a href="/P5/post/{{ post.id }}" class="stretched-link">Voir plus....</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <img src="{{ asset(post.img) }}">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-8">
+                <h2>Information</h2> <a href="/P5/build/cv/CV-PARIS.pdf" download="cvparisjc.pdf">Télécharger le CV</a>
+                <section class="resume-section" id="experience">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">FORMATIONS</h2>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Licence CONCEPTEUR DE SYSTEMES D'INFORMATION</h3>
+                                <div class="subheading mb-3">Ecole Supérieure Régionale du Numérique, en alternance au CNFPT</div>
+{#                                <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>#}
+                            </div>
+                            <div class="flex-shrink-0"><span class="text-primary">2019 / 2020 <br> Saint-Denis - Réunion</span></div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Diplôme Brevet Technicien Supérieur</h3>
+                                <div class="subheading mb-3">Lycée Technologique Supérieur ORT (C#, Javascript, SQL, C++)</div>
+{#                                <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>#}
+                            </div>
+                            <div class="flex-shrink-0"><span class="text-primary">2016 / 2019 <br> Agent - France</span></div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Diplôme Baccalauréat STI2D</h3>
+                                <div class="subheading mb-3">Lycée de Baudre (Arduino, HTML, CSS, PHP)</div>
+{#                                <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>#}
+                            </div>
+                            <div class="flex-shrink-0"><span class="text-primary">2014 / 2016 <br> Agent - France</span></div>
+                        </div>
+{#                        <div class="d-flex flex-column flex-md-row justify-content-between">#}
+{#                            <div class="flex-grow-1">#}
+{#                                <h3 class="mb-0">Web Design Intern</h3>#}
+{#                                <div class="subheading mb-3">Shout! Media Productions</div>#}
+{#                                <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>#}
+{#                            </div>#}
+{#                            <div class="flex-shrink-0"><span class="text-primary">September 2008 - June 2010</span></div>#}
+{#                        </div>#}
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
+                <h4 class="fst-italic">Liste des Articles</h4>
+                <ol class="list-unstyled mb-0">
+                    {% for post in posts %}
+                        <li><a href="/P5/post/{{ post.id }}">{{ post.title~" "~post.summary|slice(0, 30) ~ '...' }}</a></li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}
+
+{% block js %}
+    {{ asset('plugins/anime.min.js') }}
+    {{ asset('pages/index.js') }}
+{% endblock %}

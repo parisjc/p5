@@ -1,0 +1,229 @@
+{% extends 'base.twig' %}
+
+{% block page_title %}Accueil{% endblock %}
+{% block css %}
+    {{ asset('pages/post.css') }}
+{% endblock %}
+
+{% block body %}
+
+
+    <main class="mt-4 mb-5">
+
+        <div class="container">
+            <!--Grid row-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-md-8 mb-4">
+                    <button type="button" id="save" >Enregistre ton cu</button>
+                    <div id="editor">{{ post.content|raw }}</div>
+                    <!--Section: Post data-mdb-->
+{#                    <section class="border-bottom mb-4">#}
+{#                        <img src="{{ asset(post.img) }}"#}
+{#                             class="img-fluid shadow-2-strong rounded-5 mb-4" alt="" />#}
+
+{#                        <div class="row align-items-center mb-4">#}
+{#                            <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">#}
+{#                                <i class="fa-solid fa-user"></i>#}
+{#                                <span> Publier le <u>{{ post.creation_date|date('d-m-Y') }}</u> par</span>#}
+{#                                <a href="" class="text-dark">{{ post.id_users.username }}</a>#}
+{#                            </div>#}
+
+{#                            <div class="col-lg-6 text-center text-lg-end">#}
+{#                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #3b5998;">#}
+{#                                    <i class="fab fa-facebook-f"></i>#}
+{#                                </button>#}
+{#                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #55acee;">#}
+{#                                    <i class="fab fa-twitter"></i>#}
+{#                                </button>#}
+{#                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #0082ca;">#}
+{#                                    <i class="fab fa-linkedin"></i>#}
+{#                                </button>#}
+{#                                <button type="button" class="btn btn-primary px-3 me-1">#}
+{#                                    <i class="fas fa-comments"></i>#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </section>#}
+                    <!--Section: Post data-mdb-->
+
+                    <!--Section: Text-->
+{#                    <section>#}
+{#                        <p>{{ post.content }}</p>#}
+{#                    </section>#}
+                    <!--Section: Text-->
+
+                    <!--Section: Share buttons-->
+                    <section class="text-center border-top border-bottom py-4 mb-4">
+                        <p><strong>Share with your friends:</strong></p>
+
+                        <button type="button" class="btn btn-primary me-1" style="background-color: #3b5998;">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary me-1" style="background-color: #55acee;">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary me-1" style="background-color: #0082ca;">
+                            <i class="fab fa-linkedin"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary me-1">
+                            <i class="fas fa-comments me-2"></i>Nouveau commentaire
+                        </button>
+                    </section>
+                    <!--Section: Share buttons-->
+
+                    <!--Section: Author-->
+                    <section class="border-bottom mb-4 pb-4">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(23).jpg"
+                                     class="img-fluid shadow-1-strong rounded-5" alt="" />
+                            </div>
+
+                            <div class="col-9">
+                                <p class="mb-2"><strong>Anna Maria Doe</strong></p>
+                                <a href="" class="text-dark"><i class="fab fa-facebook-f me-1"></i></a>
+                                <a href="" class="text-dark"><i class="fab fa-twitter me-1"></i></a>
+                                <a href="" class="text-dark"><i class="fab fa-linkedin me-1"></i></a>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
+                                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
+                                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Section: Author-->
+
+                    <!--Section: Comments-->
+                    <section class="border-bottom mb-3">
+                        <p class="text-center"><strong>Comments: 3</strong></p>
+                        {% for com in comments %}
+                            <!-- Comment -->
+                            <div class="row mb-4">
+                                <div class="col-2">
+                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg"
+                                         class="img-fluid shadow-1-strong rounded-5" alt="" />
+                                </div>
+
+                                <div class="col-10">
+                                    <p class="mb-2"><strong>{{ com.nom  }} {{ com.prenom  }}</strong></p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
+                                        inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
+                                        Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                                    </p>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+
+                        <!-- Comment -->
+                        <div class="row mb-4">
+                            <div class="col-2">
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(25).jpg"
+                                     class="img-fluid shadow-1-strong rounded-5" alt="" />
+                            </div>
+
+                            <div class="col-10">
+                                <p class="mb-2"><strong>Valeria Groove</strong></p>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
+                                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
+                                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Comment -->
+                        <div class="row mb-4">
+                            <div class="col-2">
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(26).jpg"
+                                     class="img-fluid shadow-1-strong rounded-5" alt="" />
+                            </div>
+
+                            <div class="col-10">
+                                <p class="mb-2"><strong>Antonia Velez</strong></p>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
+                                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
+                                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Section: Comments-->
+
+                    <!--Section: Reply-->
+                    <section>
+                        <p class="text-center"><strong>Nouveau commentaire</strong></p>
+
+                        <form>
+                            <!-- Name input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="nom" class="form-control" />
+                                <label class="form-label" for="nom">Nom</label>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="prenom" class="form-control" />
+                                <label class="form-label" for="prenom">Prénom</label>
+                            </div>
+
+                            <!-- Message input -->
+                            <div class="form-outline mb-4">
+                                <textarea class="form-control" id="commentair" rows="4"></textarea>
+                                <label class="form-label" for="commentair">Commentaire</label>
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-center mb-4">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="rgpd" checked />
+                                <label class="form-check-label" for="rgpd">
+                                    Accepté les Conditions générale
+                                </label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4">
+                                Valider
+                            </button>
+                        </form>
+                    </section>
+                    <!--Section: Reply-->
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block js %}
+    {{ asset('plugins/ckeditor/ckeditor.js') }}
+    <script>
+        var editor;
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( neweditor => {
+                editor = neweditor;
+                {#editor.setData("<p>{{ post.content|raw }}</p>")#}
+
+            })
+            .catch( error => {
+                console.error( error );
+            } );
+
+        $('#save').click(function (event) {
+            console.log(editor.getData());
+            $.post('/P5/updatepost', {id: {{ post.id }}, content: editor.getData()})
+                .done(data => data && data === 'true'?document.location.href="/P5":console.log('kos'))
+                .fail()
+                .always();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>PARIS JC| {% block page_title %}{% endblock %}</title>
+    <base href="/">
+    <link rel="icon" href="{{ asset('logo.png') }}" />
+    {% block head %}
+        {{ asset('main.css') }}
+        {{ asset('plugins/font-awesome.min.css') }}
+        {{ asset('plugins/panelException.css') }}
+    {% endblock %}
+</head>
+<body>
+
+{% block body %}
+    {% if app.env is same as('dev') and app.debug is same as(true) %}
+        {% include 'Base/exceptions.twig' with {'exceptions': _exceptions, 'critical': _critical} %}
+    {% else %}
+        {% include 'Base/error2.twig' with {'exceptions': _exceptions, 'critical': _critical} %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ asset('plugins/jquery.min.js') }}
+    {{ asset('plugins/exceptions-toggle.js') }}
+{% endblock %}
+</body>
+</html>

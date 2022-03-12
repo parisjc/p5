@@ -1,0 +1,8 @@
+main:
+  ENV: dev
+  DEBUG: true
+
+access:
+  ROLE_GUEST: 0
+  ROLE_ADMIN: 1
+  ROLE_CLIENT: 2

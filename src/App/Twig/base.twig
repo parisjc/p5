@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>PARIS JC | {% block page_title %}{% endblock %}</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="PARIS Jean-Christophe dévellopeur web" name="description" />
+    <meta content="" name="author" />
+    {% block head %}
+        {{ asset('plugins/bootstrap.min.css') }}
+        {{ asset('plugins/sticky-footer.css') }}
+{#        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />#}
+
+    {% endblock %}
+    <css>
+        {% block css %}
+        {% endblock %}
+    </css>
+
+</head>
+<body class="d-flex flex-column h-100">
+
+
+{% block header %}
+    {% include 'home/header.twig' %}
+{% endblock %}
+
+
+{#<main class="flex-shrink-0">#}
+    {% block body %}
+
+    {% endblock %}
+{#</main>#}
+
+{% block footer %}
+    {% include 'home/footer.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ asset('plugins/jquery.min.js') }}
+    {{ asset('plugins/bootstrap.bundle.min.js') }}
+    <script src="https://kit.fontawesome.com/d29c60525e.js" crossorigin="anonymous"></script>
+{% endblock %}
+<js>
+    {% block js %}
+    {% endblock %}
+</js>
+
+</body>
+</html>
