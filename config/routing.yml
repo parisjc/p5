@@ -7,6 +7,10 @@ routes:
     controller: 'PostController'
     function: 'DefaultAction'
 
+  '/article':
+    controller: 'PostController'
+    function: 'PostByUserAction'
+
   '/updatepost':
     controller: 'PostController'
     function: 'UpdatePost'
@@ -21,6 +25,16 @@ routes:
 
   '/validlogin':
     controller: 'LoginController'
-    function: 'ValidLoginAction'
+    function: 'ValidLogin'
     methods:
       - POST
+
+  '/updateactif':
+    controller: 'PostController'
+    function: 'UpdateActifByPost'
+    methods:
+      - POST
+
+  '/disconnect':
+    controller: 'LoginController'
+    function: 'DisconnectAction'

@@ -4,6 +4,7 @@ namespace Lib\Abstracts;
 use Lib\Autoload;
 use Lib\Manager\ExceptionsManager;
 use Lib\Manager\RessourceManager;
+use Lib\Manager\UserManager;
 use Lib\Twig\assetExtension;
 use Lib\Twig\DebugExtension;
 use Lib\Twig\translateExtension;
@@ -31,7 +32,7 @@ abstract class AbstractController
         $this->twig->addExtension(new assetExtension());
         $this->twig->addExtension(new translateExtension());
         $this->twig->addExtension(new DebugExtension());
-//        $this->twig->addFunction(new TwigFunction('hasAccess', array(new UserManager(), 'hasAccess')));
+        $this->twig->addFunction(new TwigFunction('isConnect', array(new UserManager(), 'isConnect')));
 //        if($_SERVER['DEBUG'] === true) {
 //            $this->twig->addExtension(new DebugExtension());
 //        }

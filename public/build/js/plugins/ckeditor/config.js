@@ -1,0 +1,1 @@
+config.filebrowserUploadMethod = 'form'; // Added for file browser

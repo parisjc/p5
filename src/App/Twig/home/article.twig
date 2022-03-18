@@ -1,0 +1,60 @@
+{% extends 'base.twig' %}
+
+{% block page_title %}Article{% endblock %}
+{% block css %}
+
+{% endblock %}
+
+{% block body %}
+<main class="mt-4 mb-5">
+    <div class="container">
+    <table class="table">
+        <thead class="table-dark">
+        <th>Numéro</th><th>Titre</th><th>Date création</th><th>Etat</th>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.creation_date }}</td>
+                <td>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="actif{{ post.id }}" value="{{ post.id }}" {% if post.actif == true %}checked{% endif %}>
+                        <label class="form-check-label" for="actif{{ post.id }}">{% if post.actif == true %}Activer{% else %}Désactiver{% endif %}</label>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        $('input[type=checkbox]').change(function () {
+            let element=$(this).is(":checked");
+            let idpost = $(this).val();
+            console.log(element)
+            switch (element)
+            {
+                case false:
+                    console.log("label[for='"+$(this).attr("id")+"']");
+                    $("label[for='"+$(this).attr("id")+"']").text('Désactiver')
+                    console.log($("label[for='"+$(this).attr("id")+"']"));
+                    break;
+                case true:
+                    console.log($("label[for='"+$(this).attr("id")+"']"));
+                    $("label[for='"+$(this).attr("id")+"']").text('Activer')
+                    break;
+            }
+            $.post('/P5/updateactif', {id:idpost, actif: element})
+                .done(data => data && data === 'true'?console.log('information bien enregistrer'):console.log('erreur input article : actif'))
+                .fail()
+                .always();
+        });
+    </script>
+{% endblock %}

@@ -22,15 +22,30 @@ class PostController extends AbstractController
     {
         $post = $this->poseRepo::getById($id);
         $com = $this->comRepo->getComValidByPost($id);
-//        dump($com);
-        echo $this->render('home/post.twig',array('post'=>$post,'comments'=>$com));
+        if(isset($_SESSION['user'])) {
+            ($post->getid_users()->getusername() == $_SESSION['user']['username']) ? $editor = true : $editor = false;
+        }
+        else
+        {
+            $editor=false;
+        }
+        echo $this->render('home/post.twig',array('post'=>$post,'comments'=>$com,'editor'=>json_encode($editor)));
     }
 
+    public function PostByUserAction()
+    {
+        $post = $this->poseRepo::getListByUser($_SESSION['user']['id']);
+        echo $this->render('home/article.twig',array('posts'=>$post));
+    }
+
+    public function UpdateActifByPost($id,$actif)
+    {
+        $post = $this->poseRepo::setUpdateAtifByPost($id,$actif);
+        echo json_encode($post);
+    }
     public function UpdatePost($id,$content)
     {
-        dump($id);
-        dump($content);
         $post = $this->poseRepo::setUpdatePost($id,$content);
-        var_dump($post);
+        echo json_encode($post);
     }
 }

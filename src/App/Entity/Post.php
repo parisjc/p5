@@ -64,7 +64,7 @@ class Post extends AbstractEntite
     /**
      * @return string
      */
-    public function getCreationDate(): string
+    public function getCreation_Date(): string
     {
         return $this->creation_date;
     }
@@ -83,6 +83,14 @@ class Post extends AbstractEntite
     public function getContent(): string
     {
         return $this->content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActif(): bool
+    {
+        return $this->actif;
     }
 
 

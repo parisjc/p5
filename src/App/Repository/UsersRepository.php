@@ -18,8 +18,10 @@ class UsersRepository extends AbstractEntityRepository
         $res = self::fetch($resq,false);
         if(!empty($res)) {
             if (password_verify($pwd, $res[0]['mdp'])) {
+                $_SESSION['user']['id']=$res[0]['id'];
                 $_SESSION['user']['nom']=$res[0]['nom'];
                 $_SESSION['user']['prenom']=$res[0]['prenom'];
+                $_SESSION['user']['username']=$res[0]['username'];
                 $_SESSION['user']['role']=$res[0]['libelle_role'];
                 return true;
             } else {

@@ -8,6 +8,12 @@ class UserManager
     {
         return isset($_SESSION['user']);
     }
+    public function disconnect()
+    {
+        session_unset();
+        session_destroy();
+    }
+
 
     public function getRole()
     {

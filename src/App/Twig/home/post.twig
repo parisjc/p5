@@ -1,13 +1,11 @@
 {% extends 'base.twig' %}
 
-{% block page_title %}Accueil{% endblock %}
+{% block page_title %}Post{% endblock %}
 {% block css %}
     {{ asset('pages/post.css') }}
 {% endblock %}
 
 {% block body %}
-
-
     <main class="mt-4 mb-5">
 
         <div class="container">
@@ -15,44 +13,36 @@
             <div class="row">
                 <!--Grid column-->
                 <div class="col-md-8 mb-4">
-                    <button type="button" id="save" >Enregistre ton cu</button>
-                    <div id="editor">{{ post.content|raw }}</div>
-                    <!--Section: Post data-mdb-->
-{#                    <section class="border-bottom mb-4">#}
-{#                        <img src="{{ asset(post.img) }}"#}
-{#                             class="img-fluid shadow-2-strong rounded-5 mb-4" alt="" />#}
 
-{#                        <div class="row align-items-center mb-4">#}
-{#                            <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">#}
-{#                                <i class="fa-solid fa-user"></i>#}
-{#                                <span> Publier le <u>{{ post.creation_date|date('d-m-Y') }}</u> par</span>#}
-{#                                <a href="" class="text-dark">{{ post.id_users.username }}</a>#}
-{#                            </div>#}
+                    {% if editor=='true' %}
+                    <!--Div: Editor-->
+                    <button type="button" id="save" value="{{ post.id }}">Enregistrer</button>
+                    <div  name="editor" id="editor">{{ post.content|raw }}</div>
+                    <!--Div: Editor-->
+                    {% else %}
 
-{#                            <div class="col-lg-6 text-center text-lg-end">#}
-{#                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #3b5998;">#}
-{#                                    <i class="fab fa-facebook-f"></i>#}
-{#                                </button>#}
-{#                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #55acee;">#}
-{#                                    <i class="fab fa-twitter"></i>#}
-{#                                </button>#}
-{#                                <button type="button" class="btn btn-primary px-3 me-1" style="background-color: #0082ca;">#}
-{#                                    <i class="fab fa-linkedin"></i>#}
-{#                                </button>#}
-{#                                <button type="button" class="btn btn-primary px-3 me-1">#}
-{#                                    <i class="fas fa-comments"></i>#}
-{#                                </button>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </section>#}
-                    <!--Section: Post data-mdb-->
+                    <!--Section: Post img-->
+                    <section class="border-bottom mb-4">
+                        <img src="{{ asset(post.img) }}"
+                             class="img-fluid shadow-2-strong rounded mb-4" alt="" />
+
+                        <div class="row align-items-center mb-4">
+                            <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+                                <img src="{{ asset('imguser.png') }}" class="rounded shadow-1-strong me-2"
+                                     height="35" alt="" loading="lazy" />
+                                <span> Publier le <u>{{ post.creation_date|date("d/m/Y") }}</u></span>
+                                <a href="" class="text-dark">{{ post.id_users.username }}</a>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Section: Post img-->
 
                     <!--Section: Text-->
-{#                    <section>#}
-{#                        <p>{{ post.content }}</p>#}
-{#                    </section>#}
+                    <section>
+                        {{ post.content|raw }}
+                    </section>
                     <!--Section: Text-->
-
+                    {% endif %}
                     <!--Section: Share buttons-->
                     <section class="text-center border-top border-bottom py-4 mb-4">
                         <p><strong>Share with your friends:</strong></p>
@@ -72,86 +62,26 @@
                     </section>
                     <!--Section: Share buttons-->
 
-                    <!--Section: Author-->
-                    <section class="border-bottom mb-4 pb-4">
-                        <div class="row">
-                            <div class="col-3">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(23).jpg"
-                                     class="img-fluid shadow-1-strong rounded-5" alt="" />
-                            </div>
-
-                            <div class="col-9">
-                                <p class="mb-2"><strong>Anna Maria Doe</strong></p>
-                                <a href="" class="text-dark"><i class="fab fa-facebook-f me-1"></i></a>
-                                <a href="" class="text-dark"><i class="fab fa-twitter me-1"></i></a>
-                                <a href="" class="text-dark"><i class="fab fa-linkedin me-1"></i></a>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
-                                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
-                                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-                    <!--Section: Author-->
-
                     <!--Section: Comments-->
                     <section class="border-bottom mb-3">
-                        <p class="text-center"><strong>Comments: 3</strong></p>
+                        <p class="text-center"><strong>Comments: {{  comments|length }}</strong></p>
                         {% for com in comments %}
                             <!-- Comment -->
                             <div class="row mb-4">
                                 <div class="col-2">
-                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg"
+                                    <img src="{{ asset('imguser.png') }}"
                                          class="img-fluid shadow-1-strong rounded-5" alt="" />
                                 </div>
 
                                 <div class="col-10">
                                     <p class="mb-2"><strong>{{ com.nom  }} {{ com.prenom  }}</strong></p>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
-                                        inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
-                                        Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
+                                        {{ com.comment  }}
                                     </p>
                                 </div>
                             </div>
 
                         {% endfor %}
-
-
-                        <!-- Comment -->
-                        <div class="row mb-4">
-                            <div class="col-2">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(25).jpg"
-                                     class="img-fluid shadow-1-strong rounded-5" alt="" />
-                            </div>
-
-                            <div class="col-10">
-                                <p class="mb-2"><strong>Valeria Groove</strong></p>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
-                                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
-                                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Comment -->
-                        <div class="row mb-4">
-                            <div class="col-2">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(26).jpg"
-                                     class="img-fluid shadow-1-strong rounded-5" alt="" />
-                            </div>
-
-                            <div class="col-10">
-                                <p class="mb-2"><strong>Antonia Velez</strong></p>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio est ab iure
-                                    inventore dolorum consectetur? Molestiae aperiam atque quasi consequatur aut?
-                                    Repellendus alias dolor ad nam, soluta distinctio quis accusantium!
-                                </p>
-                            </div>
-                        </div>
                     </section>
                     <!--Section: Comments-->
 
@@ -205,25 +135,37 @@
 
 {% block js %}
     {{ asset('plugins/ckeditor/ckeditor.js') }}
+{#    {{ asset('plugins/ckeditor/plugin.js') }}#}
+    {% if editor=='true' %}
+        {{ asset('pages/post.js') }}
+    {% endif %}
     <script>
-        var editor;
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .then( neweditor => {
-                editor = neweditor;
-                {#editor.setData("<p>{{ post.content|raw }}</p>")#}
+        {#var editor;#}
+        {#ClassicEditor#}
+        {#    .create( document.querySelector( '#editor' ),#}
+        {#        {#}
+        {#            // filebrowserUploadUrl:'http://localhost/P5/updatepost',#}
+        {#            // filebrowserUploadMethod:'form',#}
+        {#            simpleUpload: {#}
+        {#                uploadUrl: 'http://example.com'#}
+        {#                }#}
+        {#        })#}
+        {#    .then( neweditor => {#}
+        {#        editor = neweditor;#}
+        {#        console.log(editor);#}
+        {#        #}{#editor.setData("<p>{{ post.content|raw }}</p>")#}
 
-            })
-            .catch( error => {
-                console.error( error );
-            } );
+        {#    })#}
+        {#    .catch( error => {#}
+        {#        console.error( error );#}
+        {#    } );#}
 
-        $('#save').click(function (event) {
-            console.log(editor.getData());
-            $.post('/P5/updatepost', {id: {{ post.id }}, content: editor.getData()})
-                .done(data => data && data === 'true'?document.location.href="/P5":console.log('kos'))
-                .fail()
-                .always();
-        });
+        {#$('#save').click(function (event) {#}
+        {#    console.log(editor.getData());#}
+        {#    $.post('/P5/updatepost', {id: {{ post.id }}, content: editor.getData()})#}
+        {#        .done(data => data && data === 'true'?document.location.href="/P5":console.log('kos'))#}
+        {#        .fail()#}
+        {#        .always();#}
+        {#});#}
     </script>
 {% endblock %}

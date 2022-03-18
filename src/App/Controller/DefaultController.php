@@ -15,7 +15,6 @@ class DefaultController extends AbstractController
     }
     public function DefaultAction()
     {
-        dump($_SESSION);
         $postActifLimit =$this->poseRepo::getPostActifLimit();
         $posts =$this->poseRepo::getListPost();
         echo $this->render('home/index.twig',array('postActifLimit'=>$postActifLimit,'posts'=>$posts));

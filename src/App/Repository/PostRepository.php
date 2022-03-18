@@ -54,12 +54,52 @@ class PostRepository extends AbstractEntityRepository
         }
     }
 
+    public static function getListByUser($id_users)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = 'SELECT id,title,creation_date,actif FROM '.static::$table.' WHERE id_users='.$id_users.' ORDER BY id DESC';
+        $prep = $bdd::prepare($query);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return self::fetch($prep);
+        }else{
+            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
     public static function setUpdatePost($id,$content)
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
         $query = "UPDATE post SET content=\"$content\" WHERE id=$id";
-        dump($query);
+
+        $prep = $bdd::prepare($query);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
+    public static function setUpdateAtifByPost($id,$actif)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "UPDATE post SET actif=$actif WHERE id=$id";
 
         $prep = $bdd::prepare($query);
         $rqtResult = false;
