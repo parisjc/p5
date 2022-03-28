@@ -15,15 +15,63 @@
                 <div class="col-md-8 mb-4">
 
                     {% if editor=='true' %}
-                    <!--Div: Editor-->
-                    <button type="button" id="save" value="{{ post.id }}">Enregistrer</button>
-                    <div  name="editor" id="editor">{{ post.content|raw }}</div>
-                    <!--Div: Editor-->
-                    {% else %}
+                        {% if vue=='true' %}
+                            <a id="modif" href="/P5/post/{{ post.id }}?vue=false">Modifier</a>
+                            <!-- Titre -->
+                            <div id="intro" class="p-5 text-center bg-light">
+                                <h1 class="mb-0 h4">{{ post.title }}</h1>
+                            </div>
+                            <!-- Titre -->
+                            <!--Section: Post img-->
+                            <section class="border-bottom mb-4">
+                                <img src="{{ asset(post.img) }}"
+                                     class="img-fluid shadow-2-strong rounded mb-4" alt="" />
 
+                                <div class="row align-items-center mb-4">
+                                    <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+                                        <img src="{{ asset('imguser.png') }}" class="rounded shadow-1-strong me-2"
+                                             height="35" alt="" loading="lazy" />
+                                        <span> Publier le <u>{{ post.creation_date|date("d/m/Y") }}</u></span>
+                                        <a href="" class="text-dark">{{ post.id_users.username }}</a>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--Section: Post img-->
+
+                            <!--Section: Text-->
+                            <section>
+                                {{ post.content|raw }}
+                            </section>
+                            <!--Section: Text-->
+                        {% else %}
+                            <div class="mb-4">
+                                <a class="btn btn-outline-primary" id="vue" href="/P5/post/{{ post.id }}">Voir l'aperçu</a>
+                                <button class="btn btn-primary" type="button" id="save" value="{{ post.id }}">Enregistrer</button>
+                            </div>
+                            <div class="mb-4">
+                                <label for="formFileMultiple" class="form-label">Image</label>
+                                <input class="form-control" type="file" id="file" name="file"  />
+                                <button class="btn bg-success mt-4" type="button" id="btn_uploadfile" value="{{ post.id }}" >Envoyer</button>
+                                <div class="image-area mt-4"><img id="imageResult" src="{{ asset('upload/'~post.img) }}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+
+                            </div>
+                            <div class="form-text mb-4">
+                                <div>Titre : <input type="text" value="{{ post.title }}" id="title" placeholder="Titre de l'article"></div>
+                            </div>
+                            <!--Div: Editor-->
+                            <div name="editor" id="editor">{{ post.content|raw }}</div>
+                            <!--Div: Editor-->
+                        {% endif %}
+
+                    {% else %}
+                    <!-- Titre -->
+                    <div id="intro" class="p-5 text-center bg-light">
+                        <h1 class="mb-0 h4">{{ post.title }}</h1>
+                    </div>
+                    <!-- Titre -->
                     <!--Section: Post img-->
                     <section class="border-bottom mb-4">
-                        <img src="{{ asset(post.img) }}"
+                        <img src="{{ asset('upload/'~post.img) }}"
                              class="img-fluid shadow-2-strong rounded mb-4" alt="" />
 
                         <div class="row align-items-center mb-4">
@@ -45,7 +93,7 @@
                     {% endif %}
                     <!--Section: Share buttons-->
                     <section class="text-center border-top border-bottom py-4 mb-4">
-                        <p><strong>Share with your friends:</strong></p>
+                        <p><strong>Partage avec tes amis :</strong></p>
 
                         <button type="button" class="btn btn-primary me-1" style="background-color: #3b5998;">
                             <i class="fab fa-facebook-f"></i>
@@ -56,7 +104,7 @@
                         <button type="button" class="btn btn-primary me-1" style="background-color: #0082ca;">
                             <i class="fab fa-linkedin"></i>
                         </button>
-                        <button type="button" class="btn btn-primary me-1">
+                        <button type="button" class="btn btn-primary me-1" href="#comment">
                             <i class="fas fa-comments me-2"></i>Nouveau commentaire
                         </button>
                     </section>
@@ -65,6 +113,7 @@
                     <!--Section: Comments-->
                     <section class="border-bottom mb-3">
                         <p class="text-center"><strong>Comments: {{  comments|length }}</strong></p>
+                        {% if comments|length >0 %}
                         {% for com in comments %}
                             <!-- Comment -->
                             <div class="row mb-4">
@@ -80,31 +129,33 @@
                                     </p>
                                 </div>
                             </div>
-
                         {% endfor %}
+                        {% else %}
+                            <h3 class="text-center text-primary mb-4">Pas de commentaires</h3>
+                        {% endif %}
                     </section>
                     <!--Section: Comments-->
 
                     <!--Section: Reply-->
-                    <section>
+                    <section id="comment">
                         <p class="text-center"><strong>Nouveau commentaire</strong></p>
 
                         <form>
                             <!-- Name input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="nom" class="form-control" />
+                                <input type="text" id="nom" class="form-control" placeholder="Nom" />
                                 <label class="form-label" for="nom">Nom</label>
                             </div>
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="prenom" class="form-control" />
+                                <input type="text" id="prenom" class="form-control" placeholder="Prénom" />
                                 <label class="form-label" for="prenom">Prénom</label>
                             </div>
 
                             <!-- Message input -->
                             <div class="form-outline mb-4">
-                                <textarea class="form-control" id="commentair" rows="4"></textarea>
+                                <textarea class="form-control" id="commentair" rows="4" placeholder="Commentaires"></textarea>
                                 <label class="form-label" for="commentair">Commentaire</label>
                             </div>
 
@@ -135,37 +186,7 @@
 
 {% block js %}
     {{ asset('plugins/ckeditor/ckeditor.js') }}
-{#    {{ asset('plugins/ckeditor/plugin.js') }}#}
     {% if editor=='true' %}
         {{ asset('pages/post.js') }}
     {% endif %}
-    <script>
-        {#var editor;#}
-        {#ClassicEditor#}
-        {#    .create( document.querySelector( '#editor' ),#}
-        {#        {#}
-        {#            // filebrowserUploadUrl:'http://localhost/P5/updatepost',#}
-        {#            // filebrowserUploadMethod:'form',#}
-        {#            simpleUpload: {#}
-        {#                uploadUrl: 'http://example.com'#}
-        {#                }#}
-        {#        })#}
-        {#    .then( neweditor => {#}
-        {#        editor = neweditor;#}
-        {#        console.log(editor);#}
-        {#        #}{#editor.setData("<p>{{ post.content|raw }}</p>")#}
-
-        {#    })#}
-        {#    .catch( error => {#}
-        {#        console.error( error );#}
-        {#    } );#}
-
-        {#$('#save').click(function (event) {#}
-        {#    console.log(editor.getData());#}
-        {#    $.post('/P5/updatepost', {id: {{ post.id }}, content: editor.getData()})#}
-        {#        .done(data => data && data === 'true'?document.location.href="/P5":console.log('kos'))#}
-        {#        .fail()#}
-        {#        .always();#}
-        {#});#}
-    </script>
 {% endblock %}

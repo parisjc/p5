@@ -8,9 +8,9 @@ class Post extends AbstractEntite
 {
     protected int $id;
     protected string $title;
-    protected string $img;
+    protected ?string $img=null;
     protected string $summary;
-    protected string $content;
+    protected ?string $content=null;
     protected string $creation_date;
     protected Users $id_users;
     protected bool $actif;
@@ -72,7 +72,7 @@ class Post extends AbstractEntite
     /**
      * @return string
      */
-    public function getImg(): string
+    public function getImg(): ?string
     {
         return $this->img;
     }
@@ -80,7 +80,7 @@ class Post extends AbstractEntite
     /**
      * @return string
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }

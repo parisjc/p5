@@ -14,12 +14,18 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/P5/article">Vos Articles</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/P5/listutil">Liste d'utilisateur</a>
+                    </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/P5/contact">Nous contacter</a>
+                </li>
             </ul>
             {% if not isConnect() %}
                 <div class="col-md-3 text-end" style="opacity: 2">
                     <a class="btn btn-outline-primary me-2" href="/P5/login">Connexion</a>
-                    <button type="button" class="btn btn-primary">Créé un compte</button>
+                    <a class="btn btn-primary" href="/P5/sign">Créé un compte</a>
                 </div>
             {% else %}
                 <div class="dropdown">
@@ -27,6 +33,7 @@
                         {{ session.user.nom }} {{ session.user.prenom }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/P5/profil">Profil</a></li>
                         <li><a class="dropdown-item" href="/P5/disconnect">Déconnexion</a></li>
                     </ul>
                 </div>

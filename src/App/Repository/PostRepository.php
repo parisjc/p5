@@ -6,6 +6,7 @@ use Lib\BDD\BDD;
 use Lib\Exceptions\BDDException;
 use Lib\Exceptions\RepositoryException;
 use Lib\Manager\ExceptionsManager;
+use PDO;
 
 class PostRepository extends AbstractEntityRepository
 {
@@ -74,13 +75,15 @@ class PostRepository extends AbstractEntityRepository
         }
     }
 
-    public static function setUpdatePost($id,$content)
+    public static function setUpdatePost($id,$title,$content)
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = "UPDATE post SET content=\"$content\" WHERE id=$id";
+        $query = "UPDATE post SET content=:content, title=:title WHERE id=$id";
 
         $prep = $bdd::prepare($query);
+        $prep->bindParam('content',$content,PDO::PARAM_STR_NATL);
+        $prep->bindParam('title',$title,PDO::PARAM_STR);
         $rqtResult = false;
         if($prep !== false)
         {
@@ -99,9 +102,10 @@ class PostRepository extends AbstractEntityRepository
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = "UPDATE post SET actif=$actif WHERE id=$id";
+        $query = "UPDATE post SET actif = :actif WHERE id=$id";
 
         $prep = $bdd::prepare($query);
+        $prep->bindParam('actif',$actif,PDO::PARAM_BOOL);
         $rqtResult = false;
         if($prep !== false)
         {
@@ -113,6 +117,79 @@ class PostRepository extends AbstractEntityRepository
             return $rqtResult;
         }else{
             ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
+    public static function setSuppPost($id)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "DELETE FROM post WHERE id=:id";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('id',$id,PDO::PARAM_INT);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
+//            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
+    public static function setUpdatePostimg($id,$filename)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "UPDATE post SET img=:img WHERE id=:id";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('id',$id,PDO::PARAM_INT);
+        $prep->bindParam('img',$filename,PDO::PARAM_STR);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
+//            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
+    public static function setNewPost($title,$summary)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "INSERT INTO post (title,summary,id_users) VALUES (:title,:summary,:id_users)";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('title',$title,PDO::PARAM_STR);
+        $prep->bindParam('summary',$summary,PDO::PARAM_STR);
+        $prep->bindParam('id_users',$_SESSION['user']['id'],PDO::PARAM_INT);
+
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return (int)$bdd::lastInsert();
+        }else{
+            return false;
+//            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
         }
     }
 }

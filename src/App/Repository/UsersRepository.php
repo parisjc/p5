@@ -4,6 +4,8 @@ namespace App\Repository;
 use App\Entity\Users;
 use Lib\Abstracts\AbstractEntityRepository;
 use Lib\BDD\BDD;
+use OAuthProvider;
+use PDO;
 
 class UsersRepository extends AbstractEntityRepository
 {
@@ -22,6 +24,7 @@ class UsersRepository extends AbstractEntityRepository
                 $_SESSION['user']['nom']=$res[0]['nom'];
                 $_SESSION['user']['prenom']=$res[0]['prenom'];
                 $_SESSION['user']['username']=$res[0]['username'];
+                $_SESSION['user']['email']=$res[0]['email'];
                 $_SESSION['user']['role']=$res[0]['libelle_role'];
                 return true;
             } else {
@@ -31,6 +34,36 @@ class UsersRepository extends AbstractEntityRepository
         else
         {
             var_dump(!empty($res));
+            return false;
+        }
+    }
+
+    public static function saveusers($nom,$prenom,$email,$username,$mdp)
+    {
+        $key = bin2hex(random_bytes(5));
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "INSERT INTO users (nom,prenom,email,username,mdp,validation_key) VALUES (:nom,:prenom,:email,:username,:mdp,:validation_key)";
+
+        $prep = $bdd::prepare($query);
+        $password = password_hash($mdp,PASSWORD_DEFAULT);
+        $prep->bindParam('nom',$nom,PDO::PARAM_STR);
+        $prep->bindParam('prenom',$prenom,PDO::PARAM_STR);
+        $prep->bindParam('email',$email,PDO::PARAM_STR);
+        $prep->bindParam('username',$username,PDO::PARAM_STR);
+        $prep->bindParam('mdp',$password,PDO::PARAM_STR);
+        $prep->bindParam('validation_key',$key,PDO::PARAM_STR);
+
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
             return false;
         }
     }

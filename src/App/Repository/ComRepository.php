@@ -7,6 +7,7 @@ use Lib\Exceptions\BDDException;
 use Lib\Exceptions\RepositoryException;
 use Lib\Manager\ExceptionsManager;
 use App\Entity\Comments;
+use PDO;
 
 class ComRepository extends AbstractEntityRepository
 {
@@ -17,9 +18,11 @@ class ComRepository extends AbstractEntityRepository
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = 'SELECT * FROM '.static::$table.' WHERE valid=1 ORDER BY id DESC ';
+        $query = "SELECT * FROM ".static::$table." WHERE id_post=:id_post AND valid=1  ORDER BY id DESC ";
 
         $prep = $bdd::prepare($query);
+        $prep->bindParam('id_post',$id_post,PDO::PARAM_INT);
+
         $rqtResult = false;
         if($prep !== false)
         {

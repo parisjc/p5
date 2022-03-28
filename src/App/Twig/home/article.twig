@@ -2,15 +2,17 @@
 
 {% block page_title %}Article{% endblock %}
 {% block css %}
-
 {% endblock %}
 
 {% block body %}
 <main class="mt-4 mb-5">
     <div class="container">
+        <div class="mb-4">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Ajouter un post</button>
+        </div>
     <table class="table">
         <thead class="table-dark">
-        <th>Numéro</th><th>Titre</th><th>Date création</th><th>Etat</th>
+        <th>Numéro</th><th>Titre</th><th>Date création</th><th>Etat</th><th></th><th></th>
         </thead>
         <tbody>
         {% for post in posts %}
@@ -21,40 +23,48 @@
                 <td>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="actif{{ post.id }}" value="{{ post.id }}" {% if post.actif == true %}checked{% endif %}>
-                        <label class="form-check-label" for="actif{{ post.id }}">{% if post.actif == true %}Activer{% else %}Désactiver{% endif %}</label>
+                        <label class="form-check-label" for="actif{{ post.id }}">{% if post.actif == true %}Actif{% else %}Désactiver{% endif %}</label>
                     </div>
                 </td>
+                <td><a class="btn btn-primary" href="/P5/post/{{ post.id }}?vue=false">Modifier</a></td>
+                <td><a class="btn btn-danger" id="supp" value="{{ post.id }}">Supprimer</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
     </div>
 </main>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nouveu post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Titre:</label>
+                        <input type="text" class="form-control" id="title" placeholder="Titre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Résumer:</label>
+                        <input type="text" class="form-control" id="summary" placeholder="Résumer">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" id="newpost">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block js %}
-    <script>
-
-        $('input[type=checkbox]').change(function () {
-            let element=$(this).is(":checked");
-            let idpost = $(this).val();
-            console.log(element)
-            switch (element)
-            {
-                case false:
-                    console.log("label[for='"+$(this).attr("id")+"']");
-                    $("label[for='"+$(this).attr("id")+"']").text('Désactiver')
-                    console.log($("label[for='"+$(this).attr("id")+"']"));
-                    break;
-                case true:
-                    console.log($("label[for='"+$(this).attr("id")+"']"));
-                    $("label[for='"+$(this).attr("id")+"']").text('Activer')
-                    break;
-            }
-            $.post('/P5/updateactif', {id:idpost, actif: element})
-                .done(data => data && data === 'true'?console.log('information bien enregistrer'):console.log('erreur input article : actif'))
-                .fail()
-                .always();
-        });
-    </script>
+    {{ asset('plugins/ckeditor/ckeditor.js') }}
+    {{ asset('pages/article.js') }}
 {% endblock %}

@@ -23,6 +23,11 @@ class LoginController extends AbstractController
         echo $this->render('home/login.twig');
     }
 
+    public function LoginAction()
+    {
+        echo $this->render('home/sign.twig');
+    }
+
     public function ValidLogin($username,$pwd)
     {
         $res = $this->userRepo->ValidLogin($username,$pwd);

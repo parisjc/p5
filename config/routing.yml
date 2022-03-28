@@ -11,17 +11,23 @@ routes:
     controller: 'PostController'
     function: 'PostByUserAction'
 
+  '/contact':
+    controller: 'ContactController'
+    function: 'DefaultAction'
+
+  '/sign':
+    controller: 'LoginController'
+    function: 'LoginAction'
+
+  '/login':
+    controller: 'LoginController'
+    function: 'DefaultAction'
+
   '/updatepost':
     controller: 'PostController'
     function: 'UpdatePost'
     methods:
       - POST
-
-  '/login':
-    controller: 'LoginController'
-    function: 'DefaultAction'
-    role :
-      - ROLE_ADMIN
 
   '/validlogin':
     controller: 'LoginController'
@@ -29,9 +35,33 @@ routes:
     methods:
       - POST
 
+  '/saveusers':
+    controller: 'UsersController'
+    function: 'SaveUsers'
+    methods:
+      - POST
+
   '/updateactif':
     controller: 'PostController'
     function: 'UpdateActifByPost'
+    methods:
+      - POST
+
+  '/suppost':
+    controller: 'PostController'
+    function: 'SupPostById'
+    methods:
+      - POST
+
+  '/newpost':
+    controller: 'PostController'
+    function: 'NewPost'
+    methods:
+      - POST
+
+  '/uploadfile':
+    controller: 'UploadFile'
+    function: 'UpdatePost'
     methods:
       - POST
 

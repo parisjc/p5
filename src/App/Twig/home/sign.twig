@@ -1,0 +1,77 @@
+{% extends 'base.twig' %}
+
+{% block page_title %}Création compte{% endblock %}
+{% block css %}
+{{ asset('pages/login.css')}}
+{% endblock %}
+
+{% block body %}
+<!--Section form -->
+    <section class="h-100 gradient-form" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                        <h4 class="mb-4">La plus grande gloire n'est pas de ne jamais tomber, mais de se relever à chaque chute.</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+
+                                    <div class="text-center">
+                                        <img src="{{ asset('logo.png') }}" style="width: 100px;" alt="logo">
+                                    </div>
+
+                                    <div>
+                                        <p  id="message_login" class="visually-hidden text-danger">Identifiant ou Mot de passe incorrect</p>
+                                        <p>Veuillez saissir vos informations</p>
+                                        <div class="form-outline mb-4">
+                                            <input type="text" maxlength="50" id="nom" class="form-control" placeholder="Nom"/>
+                                            <label class="form-label" for="nom">Nom</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="text" maxlength="50" id="prenom" class="form-control" placeholder="Prénom"/>
+                                            <label class="form-label" for="prenom">Prénom</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="email" id="email" class="form-control" placeholder="Email"/>
+                                            <label class="form-label" for="emmail">Email</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="text" maxlength="50" id="username" class="form-control" placeholder="Nom d'utilisateur"/>
+                                            <label class="form-label" for="username">Nom d'utilisateur</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="mdp" class="form-control" placeholder="Mot de passe" />
+                                            <label class="form-label" for="mdp">Mot de passe</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="mdp2" class="form-control" placeholder="Confirmer votre mot de passe" />
+                                            <label class="form-label" for="mdp2">Confirmer votre mot de passe</label>
+                                        </div>
+
+                                        <div class="text-center pt-1 mb-1 pb-1">
+                                            <button class="btn btn-primary btn-block gradient-custom-2 mb-1" id="submit" type="submit">S'inscire</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- End Section form -->
+{% endblock %}
+
+{% block js %}
+    {{ asset('/pages/sign.js') }}
+{% endblock %}
