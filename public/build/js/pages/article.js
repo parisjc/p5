@@ -15,7 +15,7 @@ $('input[type=checkbox]').change(function () {
             break;
     }
     $.post('/P5/updateactif', {id:idpost, actif: element})
-        .done(data => data && data === 'true'?toastr.success('L\'enregistrement c\'est bien effectuer !</b>', 'Success'):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
+        .done(data => data && data === 'true'?toastr.success('<b>L\'enregistrement s\'est bien effectué !</b>', 'Success'):toastr.error('<b>Oupsss...! Une erreur est subvenue !</b>', 'Erreur'))
         .fail()
         .always();
 });
@@ -32,7 +32,7 @@ function Redirectnewpost(id)
 $('a').click(function (e) {
     let idpost = e.target.attributes.value.value;
     $.post('/P5/suppost', {id:idpost})
-        .done(data => data && data === 'true'?(toastr.success('Post Supprimer !</b>', 'Success'),setTimeout('Redirect()', 2000)):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
+        .done(data => data && data === 'true'?(toastr.success('<b>Post supprimé !</b>', 'Success'),setTimeout('Redirect()', 2000)):toastr.error('<b>Oupsss...! Une erreur est subvenue !</b>', 'Erreur'))
         .fail()
         .always();
 });

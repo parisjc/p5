@@ -1,0 +1,72 @@
+{% extends 'base.twig' %}
+
+{% block page_title %}Gestion Utilisateur{% endblock %}
+{% block css %}
+{% endblock %}
+
+{% block body %}
+    <main class="mt-4 mb-5">
+        <div class="container">
+            <div class="">
+                <h1 class="text-center mb-4">Commentaires à valider</h1>
+                <table class="table">
+                    <thead class="table-dark">
+                    <th>Numéro</th><th>Nom</th><th>Prénom</th><th>Commentaire</th><th>Date</th><th>Etat</th><th></th>
+                    </thead>
+                    <tbody>
+                    {% if comenable|length == 0 %}
+                        <tr><td colspan="7" class="text-center">Pas de commentaires à valider</td></tr>
+                    {% endif %}
+                    {% for com in comenable %}
+                        <tr>
+                            <td>{{ com.id }}</td>
+                            <td>{{ com.nom }}</td>
+                            <td>{{ com.prenom }}</td>
+                            <td>{{ com.comment }}</td>
+                            <td>{{ com.commentdate }}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="actif{{ com.id }}" value="{{ com.id }}" {% if com.valid == true %}checked{% endif %}>
+                                    <label class="form-check-label" for="actif{{ com.id }}">{% if com.valid == true %}Valider{% else %}Invalid{% endif %}</label>
+                                </div>
+                            </td>
+                            <td><a class="btn btn-danger" id="supp" value="{{ com.id }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h1 class="text-center mb-4">Commentaires validés</h1>
+                <table class="table">
+                    <thead class="table-dark">
+                    <th>Numéro</th><th>Nom</th><th>Prénom</th><th>Commentaire</th><th>Date</th><th>Etat</th><th></th>
+                    </thead>
+                    <tbody>
+                    {% for com in comactif %}
+                        <tr>
+                            <td>{{ com.id }}</td>
+                            <td>{{ com.nom }}</td>
+                            <td>{{ com.prenom }}</td>
+                            <td>{{ com.comment }}</td>
+                            <td>{{ com.commentdate }}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="actif{{ com.id }}" value="{{ com.id }}" {% if com.valid == true %}checked{% endif %}>
+                                    <label class="form-check-label" for="actif{{ com.id }}">{% if com.valid == true %}Valider{% else %}Invalid{% endif %}</label>
+                                </div>
+                            </td>
+                            <td><a class="btn btn-danger" id="supp" value="{{ com.id }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block js %}
+    {{ asset('pages/commentaire.js') }}
+{% endblock %}

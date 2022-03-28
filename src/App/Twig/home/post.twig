@@ -112,7 +112,7 @@
 
                     <!--Section: Comments-->
                     <section class="border-bottom mb-3">
-                        <p class="text-center"><strong>Comments: {{  comments|length }}</strong></p>
+                        <p class="text-center"><strong>Commentaires: {{  comments|length }}</strong></p>
                         {% if comments|length >0 %}
                         {% for com in comments %}
                             <!-- Comment -->
@@ -131,25 +131,24 @@
                             </div>
                         {% endfor %}
                         {% else %}
-                            <h3 class="text-center text-primary mb-4">Pas de commentaires</h3>
+                            <h3 class="text-center text-primary mb-4">Pas de commentaire</h3>
                         {% endif %}
                     </section>
                     <!--Section: Comments-->
-
+                    {% if isConnect() %}
                     <!--Section: Reply-->
                     <section id="comment">
                         <p class="text-center"><strong>Nouveau commentaire</strong></p>
 
-                        <form>
                             <!-- Name input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="nom" class="form-control" placeholder="Nom" />
+                                <input type="text" id="nom" class="form-control" placeholder="Nom" value="{{ session.user.nom }}" />
                                 <label class="form-label" for="nom">Nom</label>
                             </div>
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="prenom" class="form-control" placeholder="Prénom" />
+                                <input type="text" id="prenom" class="form-control" placeholder="Prénom"  value="{{ session.user.prenom }}"/>
                                 <label class="form-label" for="prenom">Prénom</label>
                             </div>
 
@@ -159,21 +158,16 @@
                                 <label class="form-label" for="commentair">Commentaire</label>
                             </div>
 
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="rgpd" checked />
-                                <label class="form-check-label" for="rgpd">
-                                    Accepté les Conditions générale
-                                </label>
-                            </div>
-
                             <!-- Submit button -->
                             <button type="submit" class="btn btn-primary btn-block mb-4">
                                 Valider
                             </button>
-                        </form>
                     </section>
-                    <!--Section: Reply-->
+                    <!--End Section: Reply-->
+                    {% else %}
+                        <p>Vous devez être connecté pour laisser un commentaire. <a href="/P5/login">Se connecter</a></p>
+                    {% endif %}
+
                 </div>
                 <!--Grid column-->
 

@@ -13,12 +13,12 @@ $('#submit').click(e=> {
                 let val = JSON.parse(data);
                 if(val===true)
                 {
-                    toastr.success('Information Enregistrer !</b>', 'Success'),
+                    toastr.success('<b>Information enregistrée !</b>', 'Success'),
                         setTimeout(Redirect(), 2000)
                 }
                 else
                 {
-                    toastr.error('Une erreur est subvenue !</b>', 'Erreur')
+                    toastr.error('<b>Oupsss...! Une erreur est subvenue !</b>', 'Erreur')
                 }
             }))
             .fail()

@@ -139,7 +139,6 @@ class PostRepository extends AbstractEntityRepository
             return $rqtResult;
         }else{
             return false;
-//            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
         }
     }
 

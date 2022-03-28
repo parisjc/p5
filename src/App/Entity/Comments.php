@@ -20,6 +20,14 @@ class Comments extends AbstractEntite
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getNom(): string
@@ -50,5 +58,14 @@ class Comments extends AbstractEntite
     {
         return $this->comment_date;
     }
+
+    /**
+     * @return bool
+     */
+    public function Valid(): bool
+    {
+        return $this->valid;
+    }
+
 
 }

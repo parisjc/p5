@@ -12,7 +12,7 @@ $('#save').click(function (event) {
     let id = event.target.attributes.value.value;
     let title = $("#title").val();
     $.post('/P5/updatepost', {id: id,title: title, content: editor.getData()})
-.done(data => data && data === 'true'?toastr.success('L\'enregistrement c\'est bien effectuer !</b>', 'Success'):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
+.done(data => data && data === 'true'?toastr.success('<b>L\'enregistrement s\'est bien effectué !</b>', 'Success'):toastr.error('<b>Oupsss...! Une erreur est subvenue !</b>', 'Erreur'))
         .fail()
         .always();
 });
@@ -35,11 +35,11 @@ $(document).ready(function() {
             success: function(response){
                 console.log(response)
                 if(response != 0){
-                    toastr.success('L\'enregistrement c\'est bien effectuer !</b>', 'Success')
+                    toastr.success('<b>L\'enregistrement s\'est bien effectué !</b>', 'Success')
                     $('#imageResult').attr('src','/P5/build/imgs/upload/'+files.name);
                 }
                 else{
-                    alert('file not uploaded');
+                    toastr.error('<b>Oupsss...! Une erreur est subvenue !</b>', 'Erreur');
                 }
             },
         });

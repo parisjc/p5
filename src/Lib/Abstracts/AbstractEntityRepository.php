@@ -77,17 +77,7 @@ abstract class AbstractEntityRepository {
         {
             return self::fetch($prep,$obj);
         }else{
-            switch ($cla) {
-                case 'mysqli':
-                    ExceptionsManager::addException(new BDDException($bdd::getDB()->error));
-                    break;
-                case 'PDO':
-                    ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
-                    break;
-                default:
-                    ExceptionsManager::addException(new RepositoryException('Type de base de données non reconnu.'));
-                    break;
-            }
+            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
         }
         return false;
     }

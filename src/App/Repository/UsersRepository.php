@@ -38,6 +38,50 @@ class UsersRepository extends AbstractEntityRepository
         }
     }
 
+    public static function setUpdateAtifByUser($id,$actif)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "UPDATE users SET activated = :actif WHERE id=$id";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('actif',$actif,PDO::PARAM_BOOL);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
+        }
+    }
+
+    public static function setSuppUser($id)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "DELETE FROM users WHERE id=:id";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('id',$id,PDO::PARAM_INT);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
+        }
+    }
+
     public static function saveusers($nom,$prenom,$email,$username,$mdp)
     {
         $key = bin2hex(random_bytes(5));

@@ -14,6 +14,53 @@ class ComRepository extends AbstractEntityRepository
     protected static string $table = 'comments';
     protected static string $classMapped = Comments::class;
 
+    public static function getComByEnable()
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "SELECT * FROM ".static::$table." WHERE valid=:valid ORDER BY id DESC ";
+        $val =false;
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('valid',$val,PDO::PARAM_BOOL);
+
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return self::fetch($prep);
+        }else{
+            return false;
+        }
+    }
+    public static function getComByActif()
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "SELECT * FROM ".static::$table." WHERE valid=:valid ORDER BY id DESC ";
+        $val = true;
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('valid',$val,PDO::PARAM_BOOL);
+
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return self::fetch($prep);
+        }else{
+            return false;
+        }
+    }
+
+
+
     public function getComValidByPost($id_post)
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
@@ -34,6 +81,52 @@ class ComRepository extends AbstractEntityRepository
             return self::fetch($prep);
         }else{
             ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
+    public static function setComValidById($id,$actif)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "UPDATE comments SET valid = :actif WHERE id=:id";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('actif',$actif,PDO::PARAM_BOOL);
+        $prep->bindParam('id',$id,PDO::PARAM_INT);
+
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
+        }
+    }
+
+    public static function setSuppCom($id)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "DELETE FROM comments WHERE id=:id";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('id',$id,PDO::PARAM_INT);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
         }
     }
 

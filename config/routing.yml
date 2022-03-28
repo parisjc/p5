@@ -23,6 +23,14 @@ routes:
     controller: 'LoginController'
     function: 'DefaultAction'
 
+  '/gestutil':
+    controller: 'UsersController'
+    function: 'DefaultAction'
+
+  '/gestcom':
+    controller: 'ComController'
+    function: 'DefaultAction'
+
   '/updatepost':
     controller: 'PostController'
     function: 'UpdatePost'
@@ -47,9 +55,33 @@ routes:
     methods:
       - POST
 
+  '/updatecomsactif':
+    controller: 'ComController'
+    function: 'UpdateComsActifById'
+    methods:
+      - POST
+
+  '/updateusersactif':
+    controller: 'UsersController'
+    function: 'UpdateActifByUser'
+    methods:
+      - POST
+
   '/suppost':
     controller: 'PostController'
     function: 'SupPostById'
+    methods:
+      - POST
+
+  '/supuser':
+    controller: 'UsersController'
+    function: 'SupUserById'
+    methods:
+      - POST
+
+  '/supcom':
+    controller: 'ComController'
+    function: 'SupComById'
     methods:
       - POST
 

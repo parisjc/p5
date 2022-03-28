@@ -1,0 +1,40 @@
+{% extends 'base.twig' %}
+
+{% block page_title %}Gestion Utilisateur{% endblock %}
+{% block css %}
+{% endblock %}
+
+{% block body %}
+<main class="mt-4 mb-5">
+    <div class="container">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Numéro</th><th>Nom</th><th>Prénom</th><th>Pseudo</th><th>Email</th><th>Etat</th><th></th>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="actif{{ user.id }}" value="{{ user.id }}" {% if user.activated == true %}checked{% endif %}>
+                            <label class="form-check-label" for="actif{{ user.id }}">{% if user.activated == true %}Valider{% else %}Invalid{% endif %}</label>
+                        </div>
+                    </td>
+                    <td><a class="btn btn-danger" id="supp" value="{{ user.id }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}
+
+{% block js %}
+    {{ asset('pages/utilisateur.js') }}
+{% endblock %}

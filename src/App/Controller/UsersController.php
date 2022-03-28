@@ -17,9 +17,27 @@ class UsersController extends AbstractController
         $this->userRepo= new UsersRepository();
     }
 
+    public function DefaultAction()
+    {
+        $res = $this->userRepo::getAll();
+        echo $this->render('home/utilisateur.twig',array('users'=>$res));
+    }
+
     public function SaveUsers($nom,$prenom,$email,$username,$mdp)
     {
         $res = $this->userRepo::saveusers($nom,$prenom,$email,$username,$mdp);
         echo json_encode($res);
+    }
+
+    public function UpdateActifByUser($id,$actif)
+    {
+        $user = $this->userRepo::setUpdateAtifByUser($id,$actif);
+        echo json_encode($user);
+    }
+
+    public function SupUserById($id)
+    {
+        $user = $this->userRepo::setSuppUser($id);
+        echo json_encode($user);
     }
 }

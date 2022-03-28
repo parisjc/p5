@@ -10,10 +10,19 @@ class Users extends AbstractEntite
     protected string $prenom;
     protected string $username;
     protected string $email;
+    protected bool $activated;
 
     public function __construct(array $arr=NULL) {
         if($arr!=NULL)
             $this->hydrate($arr);
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
@@ -55,4 +64,14 @@ class Users extends AbstractEntite
     {
         $this->email = $email;
     }
+
+    /**
+     * @return bool
+     */
+    public function Activated(): bool
+    {
+        return $this->activated;
+    }
+
+
 }
