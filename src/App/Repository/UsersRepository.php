@@ -15,25 +15,26 @@ class UsersRepository extends AbstractEntityRepository
 
     public function ValidLogin($username,$pwd)
     {
-        $resq = BDD::query("SELECT users.*,role.libelle_role FROM users,role WHERE users.username = '".$username."' AND role.id = users.id_role");
+        $resq = BDD::query("SELECT users.*,role.id AS id_role FROM users,role WHERE users.username = '".$username."' AND role.id = users.id_role");
 
         $res = self::fetch($resq,false);
-        if(!empty($res)) {
-            if (password_verify($pwd, $res[0]['mdp'])) {
-                $_SESSION['user']['id']=$res[0]['id'];
-                $_SESSION['user']['nom']=$res[0]['nom'];
-                $_SESSION['user']['prenom']=$res[0]['prenom'];
-                $_SESSION['user']['username']=$res[0]['username'];
-                $_SESSION['user']['email']=$res[0]['email'];
-                $_SESSION['user']['role']=$res[0]['libelle_role'];
-                return true;
+        if($res[0]['activated'] == true) {
+            if (!empty($res)) {
+                if (password_verify($pwd, $res[0]['mdp'])) {
+                    $_SESSION['user']['id'] = $res[0]['id'];
+                    $_SESSION['user']['nom'] = $res[0]['nom'];
+                    $_SESSION['user']['prenom'] = $res[0]['prenom'];
+                    $_SESSION['user']['username'] = $res[0]['username'];
+                    $_SESSION['user']['email'] = $res[0]['email'];
+                    $_SESSION['user']['role'] = $res[0]['id_role'];
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
-        }
-        else
-        {
-            var_dump(!empty($res));
+        }else {
             return false;
         }
     }

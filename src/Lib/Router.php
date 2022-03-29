@@ -4,19 +4,20 @@ namespace Lib;
 
 use Lib\Exceptions\EnvironnementException;
 use Lib\Exceptions\NotFoundException;
-//use Lib\Exceptions\PermissionException;
+use Lib\Exceptions\PermissionException;
 use Lib\Exceptions\RouteException;
 use Lib\Manager\ExceptionsManager;
+use Lib\Manager\PermissionsManager;
 use Lib\Manager\RoutesManager;
 use ReflectionMethod;
 
 class Router
 {
-//    private PermissionsManager $perm;
+    private PermissionsManager $perm;
 
-    function __construct()
+    function __construct(PermissionsManager $perm)
     {
-//        $this->perm = $perm;
+        $this->perm = $perm;
     }
 
     public function getRoute()
@@ -71,7 +72,7 @@ class Router
                         return false;
                     }
 
-//                    if($this->perm->HasAccessToController($route)){
+                    if($this->perm->HasAccessToController($route)){
                         if($_SERVER['REQUEST_METHOD'] === "POST")
                         {
                             $orderedParam = array();
@@ -89,16 +90,16 @@ class Router
                             $controller->$func();
                         }
                         return true;
-//                    }else{
-//                        if(!isset($_SESSION['user'])) {
-//                            $LoginC = new LoginController();
-//                            $LoginC->DefaultAction();
-//                        }
-//                        else {
-//                            ExceptionsManager::addException(new PermissionException("You don't have access to this page"));
-//                        }
-//                        return false;
-//                    }
+                    }else{
+                        if(!isset($_SESSION['user'])) {
+                            $LoginC = new LoginController();
+                            $LoginC->DefaultAction();
+                        }
+                        else {
+                            ExceptionsManager::addException(new PermissionException("You don't have access to this page"));
+                        }
+                        return false;
+                    }
                 } else {
                     continue;
                 }

@@ -55,6 +55,26 @@ class PostRepository extends AbstractEntityRepository
         }
     }
 
+    public static function getListPostAdmin()
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = 'SELECT id,title,creation_date,actif FROM '.static::$table.' ORDER BY id DESC';
+        $prep = $bdd::prepare($query);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return self::fetch($prep);
+        }else{
+            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+        }
+    }
+
     public static function getListByUser($id_users)
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;

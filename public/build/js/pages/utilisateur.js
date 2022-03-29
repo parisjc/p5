@@ -5,7 +5,7 @@ $('input[type=checkbox]').change(function () {
     switch (element)
     {
         case false:
-            $("label[for='"+$(this).attr("id")+"']").text('Invalid')
+            $("label[for='"+$(this).attr("id")+"']").text('Invalide')
             element=0
             break;
         case true:
@@ -14,7 +14,7 @@ $('input[type=checkbox]').change(function () {
             break;
     }
     $.post('/P5/updateusersactif', {id:iduser, actif: element})
-        .done(data => data && data === 'true'?toastr.success('L\'enregistrement c\'est bien effectuer !</b>', 'Success'):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
+        .done(data => data && data === 'true'?toastr.success('L\'enregistrement s\'est bien effectueé !</b>', 'Success'):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
         .fail()
         .always();
 });
@@ -29,7 +29,7 @@ $('a').click(function (e) {
     let iduser = e.target.attributes.value.value;
     console.log(iduser)
     $.post('/P5/supuser', {id:iduser})
-        .done(data => data && data === 'true'?(toastr.success('Post Supprimer !</b>', 'Success'),setTimeout('Redirect()', 2000)):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
+        .done(data => data && data === 'true'?(toastr.success('Utilisateur Supprimer !</b>', 'Success'),setTimeout('Redirect()', 2000)):toastr.error('Une erreur est subvenue !</b>', 'Erreur'))
         .fail()
         .always();
 });

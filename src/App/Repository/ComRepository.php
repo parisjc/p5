@@ -129,5 +129,30 @@ class ComRepository extends AbstractEntityRepository
             return false;
         }
     }
+    public static function SaveCom($id_post,$nom,$prenom,$com)
+    {
+        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+
+        $query = "INSERT INTO comments(nom,prenom,comment,id_post) VALUES(:nom,:prenom,:comment,:id_post)";
+
+        $prep = $bdd::prepare($query);
+        $prep->bindParam('nom',$nom,PDO::PARAM_STR);
+        $prep->bindParam('prenom',$prenom,PDO::PARAM_STR);
+        $prep->bindParam('comment',$com,PDO::PARAM_STR);
+        $prep->bindParam('id_post',$id_post,PDO::PARAM_INT);
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return $rqtResult;
+        }else{
+            return false;
+        }
+    }
+
 
 }

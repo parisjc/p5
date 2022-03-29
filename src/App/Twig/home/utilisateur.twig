@@ -22,7 +22,7 @@
                     <td>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="actif{{ user.id }}" value="{{ user.id }}" {% if user.activated == true %}checked{% endif %}>
-                            <label class="form-check-label" for="actif{{ user.id }}">{% if user.activated == true %}Valider{% else %}Invalid{% endif %}</label>
+                            <label class="form-check-label" for="actif{{ user.id }}">{% if user.activated == true %}Valider{% else %}Invalide{% endif %}</label>
                         </div>
                     </td>
                     <td><a class="btn btn-danger" id="supp" value="{{ user.id }}">Supprimer</a></td>

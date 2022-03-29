@@ -4,6 +4,7 @@ namespace Lib;
 
 use Lib\BDD\BDD;
 use Lib\Manager\ExceptionsManager;
+use Lib\Manager\PermissionsManager;
 use Lib\Manager\RoutesManager;
 use RuntimeException;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -25,12 +26,13 @@ class Application
 
         $config = $this->loadConfig();
         BDD::init($config['database']);
+        $perm = new PermissionsManager();
         foreach ($config['routes'] as $route => $data)
         {
             RoutesManager::addRoute($route, $data);
         }
 
-        $router = new Router();
+        $router = new Router($perm);
         $error = $router->getRoute();
         if(isset($error) && !$error)
         {

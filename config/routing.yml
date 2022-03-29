@@ -26,6 +26,8 @@ routes:
   '/gestutil':
     controller: 'UsersController'
     function: 'DefaultAction'
+    access:
+      - ROLE_ADMIN
 
   '/gestcom':
     controller: 'ComController'
@@ -46,6 +48,12 @@ routes:
   '/saveusers':
     controller: 'UsersController'
     function: 'SaveUsers'
+    methods:
+      - POST
+
+  '/savecom':
+    controller: 'ComController'
+    function: 'SaveCom'
     methods:
       - POST
 

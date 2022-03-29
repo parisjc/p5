@@ -33,4 +33,11 @@ class ComController extends AbstractController
         $res = $this->comRepo::setSuppCom($id);
         echo json_encode($res);
     }
+
+    public function SaveCom($id_post,$nom,$prenom,$com)
+    {
+        $res = $this->comRepo::SaveCom($id_post,$nom,$prenom,$com);
+        echo json_encode($res);
+    }
+
 }

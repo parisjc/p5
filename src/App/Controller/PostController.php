@@ -35,7 +35,14 @@ class PostController extends AbstractController
 
     public function PostByUserAction()
     {
-        $post = $this->poseRepo::getListByUser($_SESSION['user']['id']);
+        if($_SESSION['user']['role']==ROLE_ADMIN)
+        {
+            $post = $this->poseRepo::getListPostAdmin();
+        }
+        else
+        {
+            $post = $this->poseRepo::getListByUser($_SESSION['user']['id']);
+        }
         echo $this->render('home/article.twig',array('posts'=>$post));
     }
 

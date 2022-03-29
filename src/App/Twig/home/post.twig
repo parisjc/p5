@@ -142,24 +142,24 @@
 
                             <!-- Name input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="nom" class="form-control" placeholder="Nom" value="{{ session.user.nom }}" />
+                                <input type="text" id="nom" class="form-control" placeholder="Nom" value="{{ session.user.nom }}" required />
                                 <label class="form-label" for="nom">Nom</label>
                             </div>
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="prenom" class="form-control" placeholder="Prénom"  value="{{ session.user.prenom }}"/>
+                                <input type="text" id="prenom" class="form-control" placeholder="Prénom"  value="{{ session.user.prenom }}" required/>
                                 <label class="form-label" for="prenom">Prénom</label>
                             </div>
 
                             <!-- Message input -->
                             <div class="form-outline mb-4">
-                                <textarea class="form-control" id="commentair" rows="4" placeholder="Commentaires"></textarea>
-                                <label class="form-label" for="commentair">Commentaire</label>
+                                <textarea class="form-control" id="com" rows="4" placeholder="Commentaires" required></textarea>
+                                <label class="form-label" for="com">Commentaire</label>
                             </div>
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-4">
+                            <button type="submit" id="savecom" value="{{ post.id }}" class="btn btn-primary btn-block mb-4">
                                 Valider
                             </button>
                     </section>

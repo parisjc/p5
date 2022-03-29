@@ -14,12 +14,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/P5/article">Gestion Articles</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/P5/gestcom">Gestion Commentaires</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/P5/gestutil">Gestion Utilisateurs</a>
-                    </li>
+                    {% if session.user.role ==1 %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/P5/gestcom">Gestion Commentaires</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/P5/gestutil">Gestion Utilisateurs</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/P5/contact">Nous contacter</a>
