@@ -35,14 +35,6 @@ class LoginController extends AbstractController
 
     }
 
-    private function CreCompteAction ()
-    {
-        $options = [
-            'cost' => 12,
-        ];
-        echo password_hash("mdp", PASSWORD_BCRYPT, $options);
-    }
-
     public function DisconnectAction()
     {
         $this->userManager->disconnect();
