@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+
 <main class="mt-4 mb-5">
     <div class="container">
         <div class="mb-4">
@@ -12,7 +13,7 @@
         </div>
     <table class="table">
         <thead class="table-dark">
-        <th>Numéro</th><th>Titre</th><th>Date création</th><th>Etat</th><th></th><th></th>
+        <th>Numéro</th><th>Titre</th><th>Date création</th><th>Catégorie</th><th>Etat</th><th></th><th></th>
         </thead>
         <tbody>
         {% for post in posts %}
@@ -20,6 +21,7 @@
                 <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.creation_date }}</td>
+                <td>{{ post.libellecat }}</td>
                 <td>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="actif{{ post.id }}" value="{{ post.id }}" {% if post.actif == true %}checked{% endif %}>
@@ -50,8 +52,16 @@
                         <input type="text" class="form-control" id="title" placeholder="Titre">
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Résumer:</label>
-                        <input type="text" class="form-control" id="summary" placeholder="Résumer">
+                        <label for="recipient-name" class="col-form-label">Résumé:</label>
+                        <input type="text" class="form-control" id="summary" placeholder="Résumé">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Résumé:</label>
+                        <select class="form-select" id="categorie">
+                            {% for cat in cats %}
+                                <option value="{{ cat.id }}">{{ cat.libellecat }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </form>
             </div>

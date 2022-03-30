@@ -3,6 +3,7 @@
 {% block page_title %}Post{% endblock %}
 {% block css %}
     {{ asset('pages/post.css') }}
+    {{ asset('plugins/ckeditorstyle.css') }}
 {% endblock %}
 
 {% block body %}
@@ -39,7 +40,7 @@
                             <!--Section: Post img-->
 
                             <!--Section: Text-->
-                            <section>
+                            <section class="ck-content">
                                 {{ post.content|raw }}
                             </section>
                             <!--Section: Text-->
@@ -179,8 +180,10 @@
 {% endblock %}
 
 {% block js %}
-    {{ asset('plugins/ckeditor/ckeditor.js') }}
+
     {% if editor=='true' %}
+        {{ asset('plugins/ckeditor/ckeditor.js') }}
         {{ asset('pages/post.js') }}
     {% endif %}
+    {{ asset('pages/savecom.js') }}
 {% endblock %}

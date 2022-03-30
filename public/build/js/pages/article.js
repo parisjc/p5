@@ -2,7 +2,6 @@
 $('input[type=checkbox]').change(function () {
     let element=$(this).is(":checked");
     let idpost = $(this).val();
-    console.log(element)
     switch (element)
     {
         case false:
@@ -38,11 +37,11 @@ $('a').click(function (e) {
 });
 
 $('#newpost').click(function (e){
-    console.log('save post')
     let title = $('#title').val();
     let summary = $('#summary').val();
+    let cat = $('#categorie').val();
 
-    $.post('/P5/newpost', {title:title,summary :summary})
+    $.post('/P5/newpost', {title: title,summary: summary,categorie: cat})
         .done(function (data) {
             let val = JSON.parse(data);
             if(val.result===true)

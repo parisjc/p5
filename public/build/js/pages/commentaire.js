@@ -1,7 +1,6 @@
 $('input[type=checkbox]').change(function () {
     let element=$(this).is(":checked");
     let idcom = $(this).val();
-    console.log(element)
     switch (element)
     {
         case false:
@@ -13,7 +12,6 @@ $('input[type=checkbox]').change(function () {
             element=1;
             break;
     }
-    console.log(element)
     $.post('/P5/updatecomsactif', {id:idcom, actif: element})
         .done(data => data && data === 'true'?(toastr.success('<b>L\'enregistrement s\'est bien effectué !</b>', 'Success'),setTimeout('Redirect()', 2000)):toastr.error('<b>Oupsss...! Une erreur est subvenue !</b>', 'Erreur'))
         .fail()

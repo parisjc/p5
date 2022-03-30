@@ -6,16 +6,19 @@ use http\Env\Request;
 use Lib\Abstracts\AbstractController;
 use App\Repository\ComRepository;
 use App\Repository\PostRepository;
+use App\Repository\CatRepository;
 
 class PostController extends AbstractController
 {
     protected PostRepository $poseRepo;
     protected ComRepository $comRepo;
+    protected CatRepository $catRepo;
     function __construct()
     {
         parent::__construct();
         $this->poseRepo= new PostRepository();
         $this->comRepo= new ComRepository();
+        $this->catRepo = new CatRepository();
     }
 
     public function DefaultAction($id)
@@ -43,7 +46,8 @@ class PostController extends AbstractController
         {
             $post = $this->poseRepo::getListByUser($_SESSION['user']['id']);
         }
-        echo $this->render('home/article.twig',array('posts'=>$post));
+        $cat = $this->catRepo::getCat();
+        echo $this->render('home/article.twig',array('posts'=>$post,'cats'=>$cat));
     }
 
     public function UpdateActifByPost($id,$actif)
@@ -63,9 +67,9 @@ class PostController extends AbstractController
         echo json_encode($post);
     }
 
-    public function NewPost($title,$summary)
+    public function NewPost($title,$summary,$categorie)
     {
-        $post = $this->poseRepo::setNewPost($title,$summary);
+        $post = $this->poseRepo::setNewPost($title,$summary,$categorie);
         if($post!=false)
         {
             $res = array('result'=>true,'newid'=>$post);

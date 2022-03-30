@@ -32,6 +32,14 @@ routes:
   '/gestcom':
     controller: 'ComController'
     function: 'DefaultAction'
+    access:
+      - ROLE_ADMIN
+
+  '/contactmail':
+    controller: 'ContactController'
+    function: 'ContactEmail'
+    methods:
+      - POST
 
   '/updatepost':
     controller: 'PostController'

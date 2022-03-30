@@ -1,5 +1,6 @@
 <?php
 namespace App\Repository;
+
 use App\Entity\Post;
 use Lib\Abstracts\AbstractEntityRepository;
 use Lib\BDD\BDD;
@@ -30,7 +31,7 @@ class PostRepository extends AbstractEntityRepository
         {
             return self::fetch($prep);
         }else{
-            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+            return false;
             }
     }
 
@@ -51,7 +52,7 @@ class PostRepository extends AbstractEntityRepository
         {
             return self::fetch($prep);
         }else{
-            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+            return false;
         }
     }
 
@@ -59,7 +60,7 @@ class PostRepository extends AbstractEntityRepository
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = 'SELECT id,title,creation_date,actif FROM '.static::$table.' ORDER BY id DESC';
+        $query = 'SELECT post.id,title,creation_date,actif,libelle_cat FROM '.static::$table.',categorie WHERE categorie.id=post.id_cat ORDER BY post.id DESC';
         $prep = $bdd::prepare($query);
         $rqtResult = false;
         if($prep !== false)
@@ -79,7 +80,7 @@ class PostRepository extends AbstractEntityRepository
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = 'SELECT id,title,creation_date,actif FROM '.static::$table.' WHERE id_users='.$id_users.' ORDER BY id DESC';
+        $query = 'SELECT post.id,title,creation_date,actif,libelle_cat FROM '.static::$table.',categorie WHERE id_users='.$id_users.' AND categorie.id=post.id_cat ORDER BY post.id DESC';
         $prep = $bdd::prepare($query);
         $rqtResult = false;
         if($prep !== false)
@@ -91,7 +92,7 @@ class PostRepository extends AbstractEntityRepository
         {
             return self::fetch($prep);
         }else{
-            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+            return false;
         }
     }
 
@@ -114,7 +115,7 @@ class PostRepository extends AbstractEntityRepository
         {
             return $rqtResult;
         }else{
-            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+            return false;
         }
     }
 
@@ -136,7 +137,7 @@ class PostRepository extends AbstractEntityRepository
         {
             return $rqtResult;
         }else{
-            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
+            return false;
         }
     }
 
@@ -182,20 +183,20 @@ class PostRepository extends AbstractEntityRepository
             return $rqtResult;
         }else{
             return false;
-//            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
         }
     }
 
-    public static function setNewPost($title,$summary)
+    public static function setNewPost($title,$summary,$categorie)
     {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = "INSERT INTO post (title,summary,id_users) VALUES (:title,:summary,:id_users)";
+        $query = "INSERT INTO post (title,summary,id_users,id_cat) VALUES (:title,:summary,:id_users,:id_cat)";
 
         $prep = $bdd::prepare($query);
         $prep->bindParam('title',$title,PDO::PARAM_STR);
         $prep->bindParam('summary',$summary,PDO::PARAM_STR);
         $prep->bindParam('id_users',$_SESSION['user']['id'],PDO::PARAM_INT);
+        $prep->bindParam('id_cat',$categorie,PDO::PARAM_INT);
 
         $rqtResult = false;
         if($prep !== false)
@@ -208,7 +209,6 @@ class PostRepository extends AbstractEntityRepository
             return (int)$bdd::lastInsert();
         }else{
             return false;
-//            ExceptionsManager::addException(new BDDException($bdd::getDB()->errorInfo()[2]));
         }
     }
 }

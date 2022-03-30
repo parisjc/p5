@@ -14,8 +14,8 @@
 
             <!-- Name input -->
             <div class="mb-3">
-                <label class="form-label" for="name">Nom - Prénom</label>
-                <input class="form-control" id="name" type="text" placeholder="Nom - Prénom" {% if user!="" %}value="{{ user.nom}} {{ user.prenom}}"{% endif%} data-sb-validations="required" />
+                <label class="form-label"  for="name">Nom - Prénom</label>
+                <input class="form-control" id="nom" type="text" placeholder="Nom - Prénom" {% if user!="" %}value="{{ user.nom}} {{ user.prenom}}"{% endif%} data-sb-validations="required" />
             </div>
 
             <!-- Email address input -->
@@ -27,7 +27,7 @@
             <!-- Object input -->
             <div class="mb-3">
                 <label class="form-label" for="Object">Sujet</label>
-                <input class="form-control" id="Object" type="text" placeholder="Sujet" data-sb-validations="required" />
+                <input class="form-control" id="object" type="text" placeholder="Sujet" data-sb-validations="required" />
             </div>
 
             <!-- Message input -->
@@ -38,7 +38,7 @@
 
             <!-- Form submit button -->
             <div class="d-grid">
-                <button class="btn btn-primary btn-lg" type="submit">Valider</button>
+                <button class="btn btn-primary btn-lg" id="savecontact" type="submit">Valider</button>
             </div>
 
         </form>
@@ -47,4 +47,5 @@
 {% endblock %}
 
 {% block js %}
+    {{ asset('pages/contact.js') }}
 {% endblock %}

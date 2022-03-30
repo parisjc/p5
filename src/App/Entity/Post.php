@@ -4,6 +4,7 @@ namespace App\Entity;
 use Lib\Abstracts\AbstractEntite;
 use App\Repository\UsersRepository;
 use App\Entity\Users;
+
 class Post extends AbstractEntite
 {
     protected int $id;
@@ -12,6 +13,7 @@ class Post extends AbstractEntite
     protected string $summary;
     protected ?string $content=null;
     protected string $creation_date;
+    protected string $libelle_cat;
     protected Users $id_users;
     protected bool $actif;
 
@@ -91,6 +93,14 @@ class Post extends AbstractEntite
     public function getActif(): bool
     {
         return $this->actif;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLibelleCat(): string
+    {
+        return $this->libelle_cat;
     }
 
 

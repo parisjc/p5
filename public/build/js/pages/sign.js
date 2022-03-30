@@ -13,8 +13,9 @@ $('#submit').click(e=> {
                 let val = JSON.parse(data);
                 if(val===true)
                 {
-                    toastr.success('<b>Information enregistrée !</b>', 'Success'),
-                        setTimeout(Redirect(), 2000)
+
+                    toastr.success('<b>Information enregistrée, votre compte sera validé par l\'administration !</b>', 'Success'),
+                        setTimeout(Redirect(), 10000)
                 }
                 else
                 {
