@@ -14,18 +14,18 @@ class UploadFile extends AbstractController
         if($file['file']['error'] > 0 && $file['file']['error'] != 4){
             switch($file['file']['error']){
                 case UPLOAD_ERR_INI_SIZE:
-                    echo json_encode( "Le fichier dépasse la taille maximale par PHP voir ini_get('upload_max_filesize')");
+                     print_r( "Le fichier dépasse la taille maximale par PHP voir ini_get('upload_max_filesize')");
                     break;
                 case UPLOAD_ERR_FORM_SIZE:
-                    echo json_encode( "Le fichier dépasse la taille maximale du formulaire voir ini_get('post_max_size')");
+                    print_r( "Le fichier dépasse la taille maximale du formulaire voir ini_get('post_max_size')");
                     break;
                 case UPLOAD_ERR_PARTIAL:
-                    echo json_encode( "Le fichier est transféré partiellement.");
+                    print_r( "Le fichier est transféré partiellement.");
                     break;
                 case UPLOAD_ERR_NO_TMP_DIR:
                 case UPLOAD_ERR_CANT_WRITE:
                 case UPLOAD_ERR_EXTENSION:
-                    echo json_encode( "Une erreur s'est produite lors de l'importation du fichier.");
+                print_r( "Une erreur s'est produite lors de l'importation du fichier.");
                     break;
             }
         }
@@ -44,7 +44,7 @@ class UploadFile extends AbstractController
                 PostRepository::setUpdatePostimg($post,$filename);
                 echo $location;
             }else{
-                echo json_encode( 0);
+                print_r( 0);
             }
         }
     }
