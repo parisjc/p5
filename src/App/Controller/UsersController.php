@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 
-use http\Env\Request;
 use Lib\Abstracts\AbstractController;
 use App\Repository\UsersRepository;
 
@@ -23,7 +22,10 @@ class UsersController extends AbstractController
         echo $this->render('home/utilisateur.twig',array('users'=>$res));
     }
 
-    public function SaveUsers($nom,$prenom,$email,$username,$mdp)
+    /**
+     * @throws \Exception
+     */
+    public function SaveUsers($nom, $prenom, $email, $username, $mdp)
     {
         $res = $this->userRepo::saveusers($nom,$prenom,$email,$username,$mdp);
         echo json_encode($res);

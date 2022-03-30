@@ -34,18 +34,14 @@ class UploadFile extends AbstractController
 
         /* Location */
         $location = "./build/imgs/upload/".$filename;
-        $uploadOk = 1;
 
-        if($uploadOk == 0){
-            echo 0;
+        /* Upload file */
+        if(move_uploaded_file($file['file']['tmp_name'], $location)){
+            PostRepository::setUpdatePostimg($post,$filename);
+            echo $location;
         }else{
-            /* Upload file */
-            if(move_uploaded_file($file['file']['tmp_name'], $location)){
-                PostRepository::setUpdatePostimg($post,$filename);
-                echo $location;
-            }else{
-                print_r( 0);
-            }
+            print_r( 0);
         }
+
     }
 }

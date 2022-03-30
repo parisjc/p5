@@ -235,4 +235,20 @@ abstract class AbstractEntityRepository {
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
         return $bdd::query("DELETE FROM ".static::$table." WHERE ".static::$idFieldName."=$id");
     }
+
+    public static function execprepa($prep,$fetch=false)
+    {
+        $rqtResult = false;
+        if($prep !== false)
+        {
+            $rqtResult = $prep->execute();
+        }
+
+        if($rqtResult)
+        {
+            return !$fetch?$rqtResult:self::fetch($prep);
+        }else{
+            return false;
+        }
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use http\Env\Request;
 use Lib\Abstracts\AbstractController;
 use App\Repository\UsersRepository;
 use Lib\Manager\UserManager;
@@ -28,7 +27,10 @@ class LoginController extends AbstractController
         printf($this->render('home/sign.twig'));
     }
 
-    public function ValidLogin($username,$pwd)
+    /**
+     * @throws \Lib\Exceptions\BDDException
+     */
+    public function ValidLogin($username, $pwd)
     {
         $res = $this->userRepo->ValidLogin($username,$pwd);
          printf(json_encode($res));

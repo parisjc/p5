@@ -24,11 +24,7 @@ class ContactController extends AbstractController
 
         $Subject = "Mail Formulaire Contact - $JOUR $HEURE";
 
-        $mail_Data = "";
-        $mail_Data .= " \n";
-        $mail_Data .= " \n";
-        $mail_Data .= " \n";
-        $mail_Data .= " \n";
+        $mail_Data = " \n \n \n \n";
         $mail_Data .= "$nom \n";
 
         $mail_Data .= "Object : $object , Email : $email
@@ -49,8 +45,6 @@ class ContactController extends AbstractController
         // -------------------------
         $headers .= "X-Priority: 1 \n";
         $headers .= "X-MSMail-Priority: High \n";
-
-        $CR_Mail = TRUE;
 
         $CR_Mail = @mail ($to, $Subject, $mail_Data, $headers);
 

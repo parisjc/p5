@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 
-use http\Env\Request;
 use Lib\Abstracts\AbstractController;
 use App\Repository\PostRepository;
 

@@ -3,7 +3,6 @@ namespace App\Entity;
 
 use Lib\Abstracts\AbstractEntite;
 use App\Repository\UsersRepository;
-use App\Entity\Users;
 
 class Post extends AbstractEntite
 {
@@ -88,7 +87,7 @@ class Post extends AbstractEntite
     }
 
     /**
-     * @return string
+     * @return bool
      */
     public function getActif(): bool
     {
@@ -96,7 +95,7 @@ class Post extends AbstractEntite
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getLibelleCat(): string
     {

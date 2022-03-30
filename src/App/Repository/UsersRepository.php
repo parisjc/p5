@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 use App\Entity\Users;
+use Exception;
 use Lib\Abstracts\AbstractEntityRepository;
 use Lib\BDD\BDD;
-use OAuthProvider;
+use Lib\Exceptions\BDDException;
 use PDO;
 
 class UsersRepository extends AbstractEntityRepository
@@ -13,9 +14,12 @@ class UsersRepository extends AbstractEntityRepository
     protected static string $classMapped = Users::class;
 
 
-    public function ValidLogin($username,$pwd)
+    /**
+     * @throws BDDException
+     */
+    public function ValidLogin($username, $pwd):bool
     {
-        $resq = BDD::query("SELECT users.*,role.id AS id_role FROM users,role WHERE users.username = '".$username."' AND role.id = users.id_role");
+        $resq = BDD::query("SELECT users.*,role.id AS id_role FROM ".static::$table.",role WHERE users.username = '".$username."' AND role.id = users.id_role");
 
         $res = self::fetch($resq,false);
         if($res[0]['activated'] == true) {
@@ -42,56 +46,32 @@ class UsersRepository extends AbstractEntityRepository
 
     public static function setUpdateAtifByUser($id,$actif)
     {
-        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+        $query = "UPDATE ".static::$table." SET activated = :actif WHERE id=$id";
 
-        $query = "UPDATE users SET activated = :actif WHERE id=$id";
-
-        $prep = $bdd::prepare($query);
+        $prep = BDD::prepare($query);
         $prep->bindParam('actif',$actif,PDO::PARAM_BOOL);
-        $rqtResult = false;
-        if($prep !== false)
-        {
-            $rqtResult = $prep->execute();
-        }
-
-        if($rqtResult)
-        {
-            return $rqtResult;
-        }else{
-            return false;
-        }
+        return self::execprepa($prep);
     }
 
     public static function setSuppUser($id)
     {
-        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
+        $query = "DELETE FROM ".static::$table." WHERE id=:id";
 
-        $query = "DELETE FROM users WHERE id=:id";
-
-        $prep = $bdd::prepare($query);
+        $prep = BDD::prepare($query);
         $prep->bindParam('id',$id,PDO::PARAM_INT);
-        $rqtResult = false;
-        if($prep !== false)
-        {
-            $rqtResult = $prep->execute();
-        }
-
-        if($rqtResult)
-        {
-            return $rqtResult;
-        }else{
-            return false;
-        }
+        return self::execprepa($prep);
     }
 
-    public static function saveusers($nom,$prenom,$email,$username,$mdp)
+    /**
+     * @throws Exception
+     */
+    public static function saveusers($nom, $prenom, $email, $username, $mdp)
     {
         $key = bin2hex(random_bytes(5));
-        $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
-        $query = "INSERT INTO users (nom,prenom,email,username,mdp,validation_key) VALUES (:nom,:prenom,:email,:username,:mdp,:validation_key)";
+        $query = "INSERT INTO ".static::$table." (nom,prenom,email,username,mdp,validation_key) VALUES (:nom,:prenom,:email,:username,:mdp,:validation_key)";
 
-        $prep = $bdd::prepare($query);
+        $prep = BDD::prepare($query);
         $password = password_hash($mdp,PASSWORD_DEFAULT);
         $prep->bindParam('nom',$nom,PDO::PARAM_STR);
         $prep->bindParam('prenom',$prenom,PDO::PARAM_STR);
@@ -100,17 +80,6 @@ class UsersRepository extends AbstractEntityRepository
         $prep->bindParam('mdp',$password,PDO::PARAM_STR);
         $prep->bindParam('validation_key',$key,PDO::PARAM_STR);
 
-        $rqtResult = false;
-        if($prep !== false)
-        {
-            $rqtResult = $prep->execute();
-        }
-
-        if($rqtResult)
-        {
-            return $rqtResult;
-        }else{
-            return false;
-        }
+        return self::execprepa($prep);
     }
 }
