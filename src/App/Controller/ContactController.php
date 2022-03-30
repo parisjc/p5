@@ -54,7 +54,7 @@ class ContactController extends AbstractController
 
         $CR_Mail = @mail ($to, $Subject, $mail_Data, $headers);
 
-        if ($CR_Mail === FALSE) echo false;
-        else echo true;
+
+        echo $CR_Mail;
     }
 }

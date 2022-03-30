@@ -47,7 +47,7 @@ class PostController extends AbstractController
             $post = $this->poseRepo::getListByUser($_SESSION['user']['id']);
         }
         $cat = $this->catRepo::getCat();
-        echo $this->render('home/article.twig',array('posts'=>$post,'cats'=>$cat));
+        printf($this->render('home/article.twig',array('posts'=>$post,'cats'=>$cat)));
     }
 
     public function UpdateActifByPost($id,$actif)

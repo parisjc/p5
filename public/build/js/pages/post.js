@@ -34,7 +34,6 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success: function(response){
-                console.log(response)
                 if(response != 0){
                     toastr.success('<b>L\'enregistrement s\'est bien effectué !</b>', 'Success')
                     $('#imageResult').attr('src','/P5/build/imgs/upload/'+files.name);
