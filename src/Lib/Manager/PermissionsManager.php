@@ -6,8 +6,9 @@ use Lib\Manager\UserManager;
 class PermissionsManager
 {
     public function HasAccessToController($route){
+        $sessionrole = ((isset($_SESSION['user']['role']))?$_SESSION['user']['role']:NULL);
         $usermanager = new UserManager();
-        $userRole = $usermanager->isConnect() ? $_SESSION['user']['role'] : ROLE_GUEST;
+        $userRole = $usermanager->isConnect() ? $sessionrole : ROLE_GUEST;
         $access = RoutesManager::getRoute($route);
 
         if(!isset($access['access']))

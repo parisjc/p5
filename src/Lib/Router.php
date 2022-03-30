@@ -2,6 +2,7 @@
 
 namespace Lib;
 
+use App\Controller\LoginController;
 use Lib\Exceptions\EnvironnementException;
 use Lib\Exceptions\NotFoundException;
 use Lib\Exceptions\PermissionException;
@@ -22,7 +23,8 @@ class Router
 
     public function getRoute()
     {
-        $url = rtrim($_SERVER['REQUEST_URI']);
+        $server = $_SERVER;
+        $url = rtrim($server['REQUEST_URI']);
         $url = str_replace('/P5', '', $url);
         $count = substr_count($url, '/');
         $routes = RoutesManager::getRoutes();
@@ -41,16 +43,16 @@ class Router
 
                     if(isset($configRoute['methods']))
                     {
-                        if(!in_array($_SERVER['REQUEST_METHOD'], $configRoute['methods']))
+                        if(!in_array($server['REQUEST_METHOD'], $configRoute['methods']))
                         {
-                            ExceptionsManager::addException(new RouteException("Mauvaises méthodes d'accès à cette route (Current : ".$_SERVER['REQUEST_METHOD'].", Autorisées : ".implode(', ', $configRoute['methods']).")"));
+                            ExceptionsManager::addException(new RouteException("Mauvaises méthodes d'accès à cette route (Current : ".$server['REQUEST_METHOD'].", Autorisées : ".implode(', ', $configRoute['methods']).")"));
                             return false;
                         }
                     }
 
                     if(isset($configRoute['envDev']))
                     {
-                        if($configRoute['envDev'] && $_SERVER['APP_ENV'] !== "dev")
+                        if($configRoute['envDev'] && $server['APP_ENV'] !== "dev")
                         {
                             ExceptionsManager::addException(new EnvironnementException("Cette route n'est dispoble que en environnement de développement."));
                             return false;
@@ -73,7 +75,7 @@ class Router
                     }
 
                     if($this->perm->HasAccessToController($route)){
-                        if($_SERVER['REQUEST_METHOD'] === "POST")
+                        if($server['REQUEST_METHOD'] === "POST")
                         {
                             $orderedParam = array();
                             $reflection = new ReflectionMethod($controller, $func);
@@ -130,16 +132,16 @@ class Router
 
                     if(isset($configRoute['methods']))
                     {
-                        if(!in_array($_SERVER['REQUEST_METHOD'], $configRoute['methods']))
+                        if(!in_array($server['REQUEST_METHOD'], $configRoute['methods']))
                         {
-                            ExceptionsManager::addException(new RouteException("Mauvaises méthodes d'accès à cette route (Current : ".$_SERVER['REQUEST_METHOD'].", Autorisées : ".implode(', ', $configRoute['methods']).")"));
+                            ExceptionsManager::addException(new RouteException("Mauvaises méthodes d'accès à cette route (Current : ".$server['REQUEST_METHOD'].", Autorisées : ".implode(', ', $configRoute['methods']).")"));
                             return false;
                         }
                     }
 
                     if(isset($configRoute['envDev']))
                     {
-                        if($configRoute['envDev'] && $_SERVER['APP_ENV'] !== "dev")
+                        if($configRoute['envDev'] && $server['APP_ENV'] !== "dev")
                         {
                             ExceptionsManager::addException(new EnvironnementException("Cette route n'est dispoble que en environnement de développement."));
                             return false;

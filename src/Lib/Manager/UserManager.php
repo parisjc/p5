@@ -6,7 +6,8 @@ class UserManager
 {
     public function isConnect()
     {
-        return isset($_SESSION['user']);
+        $session =((isset($_SESSION['user']))?true:false) ;
+        return $session;
     }
     public function disconnect()
     {
@@ -17,7 +18,8 @@ class UserManager
 
     public function getRole()
     {
-        if (!isset($_SESSION['user'])) {
+        $sessionrole = ((isset($_SESSION['user']))?true:false);
+        if (!$sessionrole) {
             return ROLE_GUEST;
         }
         return $_SESSION['user']['role'];

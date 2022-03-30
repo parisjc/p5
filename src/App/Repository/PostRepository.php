@@ -188,6 +188,7 @@ class PostRepository extends AbstractEntityRepository
 
     public static function setNewPost($title,$summary,$categorie)
     {
+        $id_users = $_SESSION['user']['id'];
         $bdd = isset(static::$classBDD)?static::$classBDD:BDD::class;
 
         $query = "INSERT INTO post (title,summary,id_users,id_cat) VALUES (:title,:summary,:id_users,:id_cat)";
@@ -195,7 +196,7 @@ class PostRepository extends AbstractEntityRepository
         $prep = $bdd::prepare($query);
         $prep->bindParam('title',$title,PDO::PARAM_STR);
         $prep->bindParam('summary',$summary,PDO::PARAM_STR);
-        $prep->bindParam('id_users',$_SESSION['user']['id'],PDO::PARAM_INT);
+        $prep->bindParam('id_users',$id_users,PDO::PARAM_INT);
         $prep->bindParam('id_cat',$categorie,PDO::PARAM_INT);
 
         $rqtResult = false;

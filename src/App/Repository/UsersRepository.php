@@ -21,12 +21,13 @@ class UsersRepository extends AbstractEntityRepository
         if($res[0]['activated'] == true) {
             if (!empty($res)) {
                 if (password_verify($pwd, $res[0]['mdp'])) {
-                    $_SESSION['user']['id'] = $res[0]['id'];
-                    $_SESSION['user']['nom'] = $res[0]['nom'];
-                    $_SESSION['user']['prenom'] = $res[0]['prenom'];
-                    $_SESSION['user']['username'] = $res[0]['username'];
-                    $_SESSION['user']['email'] = $res[0]['email'];
-                    $_SESSION['user']['role'] = $res[0]['id_role'];
+                    $session['user']['id'] = $res[0]['id'];
+                    $session['user']['nom'] = $res[0]['nom'];
+                    $session['user']['prenom'] = $res[0]['prenom'];
+                    $session['user']['username'] = $res[0]['username'];
+                    $session['user']['email'] = $res[0]['email'];
+                    $session['user']['role'] = $res[0]['id_role'];
+                    $_SESSION=$session;
                     return true;
                 } else {
                     return false;
